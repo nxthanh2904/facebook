@@ -1,0 +1,29 @@
+.friend-box{
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+}
+.avatar-friend{
+    margin: 5px;
+    height: 80px !important;
+    width: 80px !important;
+    object-fit: fill;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.friend-name{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 20px 5px;
+}
+
+.name{
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 !important;
+}
+
+.custom{
+    padding: 0px 20px;
+}

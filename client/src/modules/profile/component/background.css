@@ -1,0 +1,38 @@
+* {
+    background-color: "#fff";
+}
+.wrap-content-bg {
+    background-color: "#fff";
+    height: "40vh"
+}
+
+.img-bg {
+    height: "40vh";
+}
+
+.img-bg img {
+    width: "85vw";
+    height: "40vh";
+    opacity: 0.8;
+    transition: 0.5s;
+}
+
+.img-bg img:hover {
+    opacity: 1;
+    -ms-transform: scale(1.01,1.01); /* IE 9 */
+    transform: scale(1.01,1.01); /* Standard syntax */
+    transition: 0.5s;
+}
+
+.tab-option a {
+    font-size: medium;
+    font-weight: bold;
+}
+
+.tab-option a:hover {
+    text-decoration: underline;
+}
+
+.btn-option button {
+    margin: 0 5px 0 5px;
+}
