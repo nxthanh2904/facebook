@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { getStorage } from '../config';
-import { CallApiStatus } from '../modules/auth/redux/reducers';
 
 const checkURL = (urlName, linkArr) => {
     var result = false;
@@ -17,25 +16,12 @@ const checkURL = (urlName, linkArr) => {
 }
 
 const PrivateRoute = ({ auth, isLoading, arrPage, pageName, link, component: Component, layout: Layout, ...rest }) => {
-    // const {password2AlreadyExists} = auth;
 
     return <Route {...rest} render={props => {
         var logged = getStorage();
-        // if(password2AlreadyExists)
-        //     return <Redirect to='/answer-auth-questions'/>
-        // else
-        console.log('aaaaaaaaaaaaaaaaaaaaaa', logged);
         if (logged) {
-            // if (auth.calledAPI !== CallApiStatus.FINISHED)
-            //     return <Layout></Layout>
-
-            // if (link !== '/' && checkURL(link, auth.links) !== true) {
-            //     return <Redirect to='/' />
-            // }
             return <Component {...props} />
-            {/* <Layout arrPage={arrPage} pageName={pageName} isLoading={isLoading}></Layout> */ }
         } else {
-            console.log('login')
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
         }
     }} />

@@ -21,39 +21,10 @@ class Routes extends Component {
     render() {
         const {
             auth,
-            company,
-            user,
-            role,
-            link,
-            component,
-            department,
-            employeesManager,
         } = this.props;
-        const { password2AlreadyExists, autoRedirectAfterQuestionAnswer } = auth;
         return (
             <React.Fragment>
                 <Switch>
-                    {/* <Route
-                        exact={true}
-                        path={"/answer-auth-questions"}
-                        // component={AnswerAuthQuestionPage}
-                        render={props =>
-                            (password2AlreadyExists && autoRedirectAfterQuestionAnswer)
-                                ? <Redirect to={{ pathname: '/', state: { from: props.location } }} />
-                                : <AnswerAuthQuestionPage {...props} />
-                        }
-                    /> */}
-
-                    {/* <Route
-                        exact={true}
-                        path={"/friend"}
-                        component={Listfriend}
-                    />
-                    {/* <Route 
-                        exact={true}
-                        path={"/"}
-                        component={Home}
-                    /> */}
                     <AuthRoute
                         exact
                         auth={auth}
@@ -61,22 +32,17 @@ class Routes extends Component {
                         component={Login}
                     />
                     <PrivateRoute
-                        isLoading={auth.isLoading}
-                        key={"home"}
-                        arrPage={[
-                            { link: "/", name: "home", icon: "fa fa-home" },
-                        ]}
-                        auth={auth}
+                        // isLoading={auth.isLoading}
+                        // auth={auth}
                         exact={true}
-                        link={"/"}
                         path={"/"}
                         pageName={"home"}
-                        layout={Layout}
                         component={Home}
                     />
                     <PrivateRoute
-                        exact={true}
+                        // exact={true}
                         path={"/profile"}
+                        pageName={"Profile"}
                         component={Profile}
                     />
                     <AuthRoute
@@ -85,27 +51,6 @@ class Routes extends Component {
                         path="/reset-password"
                         component={ResetPassword}
                     />
-
-                    {/* 
-                    <PrivateRoute
-                        isLoading={false}
-                        key={"all-time-sheet-log"}
-                        arrPage={[
-                            { link: "/", name: "home", icon: "fa fa-home" },
-                            {
-                                link: "/time-sheet-log/all",
-                                name: "all_time_sheet_log",
-                                icon: "fa fa-newspaper-o",
-                            },
-                        ]}
-                        auth={auth}
-                        exact={true}
-                        link={"/time-sheet-log/all"}
-                        path={"/time-sheet-log/all"}
-                        pageName={"all_time_sheet_log"}
-                        layout={Layout}
-                        component={AllTimeSheetLog}
-                    /> */}
 
                     {/* NOT FOUND */}
                     <Route component={NotFound}></Route>
