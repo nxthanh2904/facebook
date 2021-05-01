@@ -1,14 +1,14 @@
 import React from 'react';
 import "./background.css"
 
+// boxShadow: "0px -60px 100px 50px #888888" 
 const Background = () => {
     return (
         <div className="wrap-content-bg" style={{ backgroundColor: "#FFF", height: "60vh" }}>
             <div className="container">
                 <div className="img-bg" style={{ height: "40vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <img onClick={() => { console.log('background'); }} src="bg.png" alt="background image" 
-                        style={{ width: "85vw", height: "40vh", borderRadius: "10px", 
-                        boxShadow: "0px -60px 100px 50px #888888" }} 
+                        style={{ width: "85vw", height: "40vh", borderRadius: "10px"}} 
                     />
                 </div>
                 <div className="img-profile" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
