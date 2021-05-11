@@ -1,0 +1,18 @@
+.album{
+    margin-bottom: 10px;
+    height: 110px;
+    width: 95%;
+    object-fit: fill
+}
+
+.avatar-friend{
+    margin: 5px 0px;
+    height: 110px;
+    width: 95%;
+    object-fit: fill;
+    border-radius: 5px;
+}
+
+.bold{
+    font-weight: 700;
+}
