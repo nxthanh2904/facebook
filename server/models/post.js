@@ -6,52 +6,64 @@ const PostSchema = new Schema({
         type: String,
         ref: "users"
     },
-    described: {
+    content: {
         type: String,
     },
-    media: {
+
+    feeling: {
         type: String,
     },
-    modified:{
+
+    activity: {
         type: String,
     },
-    image: [{
+    images: [{
+        type: String,
+    }],
+    videos: [{
         type: String,
     }],
     comment: [{
-       creator: {
-           type: String,
-           ref: "users"
-       },
-       described: {
-           type: String
-       },
-       createAt: {
-           type: Date
-       } 
-    }],
-    created: {
-        type: Date
-    },
-    like: [{
         creator: {
             type: String,
             ref: "users"
         },
+        described: {
+            type: String
+        },
         createAt: {
             type: Date
-        } 
-     }],
-    status: {
-        type: String
+        },
+        images: [{
+            type: String,
+        }],
+        videos: [{
+            type: String,
+        }],
+    }],
+
+    reactions: [{
+        userId: {
+            type: String,
+            ref: "users"
+        },
+        type: {
+            type: Number, //1: like 2: love 3: wow 4: sad 5:angry
+        },
+        createAt: {
+            type: Date
+        }
+    }],
+    group: {
+        type: String,
+        ref: "group"
     },
-    banned: {
-        type: String
-    },
-    // Khóa bình luận
-    cancomment: {
-        type: String
-    },
+    usersHidePost: [{
+        type: String,
+        ref: "users"
+    }],
+
+
     reported: [{
         createAt: {
             type: Date
@@ -64,6 +76,6 @@ const PostSchema = new Schema({
             type: String,
         }
     }]
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('posts', PostSchema);

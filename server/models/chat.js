@@ -9,7 +9,8 @@ const ChatSchema = new Schema({
     message: [{
         creator: {
             type: String,
-            ref: "users"
+            ref: "users",
+
         },
         content: {
             type: String

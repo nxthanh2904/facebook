@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const User = require('../../models/user');
 const Post = require('../../models/post');
-const Notification =  require('../../models/notification')
+const Notification = require('../../models/notification')
 const { registerValidation, loginValidation } = require('./validate');
 const fs = require("fs");
 
@@ -11,14 +11,14 @@ const fs = require("fs");
  *  API Register
  * @param {} data
  * @body data : phoneNumber, name, password, birth
- * 
+ *
  * Did validate, check username, email, create new user
- * 
+ *
  */
 
 exports.register = async (data) => {
     let check = {
-        phoneNumber: data.phoneNumber,
+        email: data.email,
         password: data.password,
     }
     const checkValidate = await registerValidation(check);
@@ -28,7 +28,7 @@ exports.register = async (data) => {
             message: checkValidate.error
         }
     }
-    const user = await User.findOne({ phoneNumber: data.phoneNumber });
+    const user = await User.findOne({ email: data.email });
     if (user) {
         return {
             message: "Phonenumber is exist. Please use other phonenumber",
@@ -40,20 +40,25 @@ exports.register = async (data) => {
     // hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(data.password, salt);
-    
+
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  
+
     for (var i = 0; i < 6; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
     // create new user
+
+    let splitter = data.birthday.split("-");
+    let dateISO = new Date(splitter[2], splitter[1] - 1, splitter[0])
 
     let newUser = await User.create({
         code: text,
-        name: data.name,
+        firstName: data.firstName,
+        surName: data.surName,
         password: hashPassword,
-        birth: data.birth,
-        phoneNumber: data.phoneNumber,
+        birthday: dateISO,
+        email: data.email,
+        gender: data.gender,
         active: false,
     })
 
@@ -73,11 +78,11 @@ exports.getVerifyCode = async (phone) => {
 
 exports.checkVerifyCode = async (data) => {
     var user = await User.findOne({ phoneNumber: data.phoneNumber });
-    if(user){
-        if( data.code == user.code){
+    if (user) {
+        if (data.code == user.code) {
             const token = await jwt.sign({
-                    _id: user._id,
-                },
+                _id: user._id,
+            },
                 process.env.TOKEN_SECRET
             );
             user.active = true;
@@ -98,10 +103,10 @@ exports.checkVerifyCode = async (data) => {
             }
         }
     } else {
-            return {
-                succes: false,
-                message: "Unregistered phone number"
-            }
+        return {
+            succes: false,
+            message: "Unregistered phone number"
+        }
     }
 }
 
@@ -119,7 +124,7 @@ exports.login = async (data) => {
 
     //check username, password
 
-    const user = await User.findOne({ phoneNumber: data.phoneNumber });
+    const user = await User.findOne({ email: data.email });
     if (!user) {
         return {
             status: 404,
@@ -130,7 +135,7 @@ exports.login = async (data) => {
     if (checkPassword) {
         const token = await jwt.sign({
             _id: user._id,
-            },
+        },
             process.env.TOKEN_SECRET
         );
 
@@ -140,11 +145,12 @@ exports.login = async (data) => {
         let payload = {
             id: user._id,
             active: user.active,
-            name: user.name,
+            firstName: user.firstName,
+            surName: user.surName,
             token: token,
             avatar: user.avatar,
         };
-
+        console.log('server', payload)
         return {
             payload: payload,
             success: true,
@@ -159,7 +165,7 @@ exports.login = async (data) => {
 
 }
 
-exports.logout = async(id, token) => {
+exports.logout = async (id, token) => {
     var user = await User.findById(id);
     var position = await user.token.indexOf(token);
     user.token.splice(position, 1);
@@ -172,7 +178,7 @@ exports.changeInformation = async (
     name,
     avatar = undefined
 ) => {
-    
+
     let user = await User.findById(id)
 
     let deleteAvatar = "." + user.avatar;
@@ -195,7 +201,7 @@ exports.changeAvatar = async (
     described,
     avatar = undefined
 ) => {
-    
+
     let user = await User.findById(id)
     let deleteAvatar = "." + user.avatar;
     if (avatar) {
@@ -219,17 +225,28 @@ exports.changeAvatar = async (
 
 exports.getProfile = async (id) => {
     let user = await User.findById(id)
-                        .select("-password -active -token")
+        .select("-password -active -token")
 
     if (user === null) throw ["user_not_found"];
 
     return user;
 };
+exports.getUser = async (id) => {
+    let user = await User.findById(id)
+        .select("id active firstName surName avatar birthday listfriends")
+        .populate([
+            { path: "listfriends", select: "id active firstName surName avatar birthday" },
+        ]);
+    if (user === null) throw ["user_not_found"];
+    // console.log('user dayyyyyy', user);
+    return user;
+};
+
 
 exports.getNotifications = async (id) => {
-    let notification = await Notification.findOne({creator: id})
-                        .populate({path: "data.from", populate: "users", select: "name avatar"})
-                        .populate({path: "data.post", populate: "posts", select: ""})
+    let notification = await Notification.findOne({ creator: id })
+        .populate({ path: "data.from", populate: "users", select: "firstName surName avatar" })
+        .populate({ path: "data.post", populate: "posts", select: "" })
 
     return notification;
 };

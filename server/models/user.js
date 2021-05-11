@@ -3,13 +3,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    name: {
+    firstName: {
+        type: String
+    },
+    surName: {
+        type: String
+    },
+    gender: {
         type: String
     },
     code: {
         type: String
-    }, 
-    phoneNumber: {
+    },
+    email: {
         type: String,
         require: true
     },
@@ -27,7 +33,7 @@ const UserSchema = new Schema({
     token: [{
         type: String
     }],
-    birth: {
+    birthday: {
         type: Date
     },
     block: [{
@@ -41,6 +47,6 @@ const UserSchema = new Schema({
     active: {
         type: Boolean,
     }
-})
+}, {timestamps: true})
 
 module.exports = mongoose.model('users', UserSchema);
