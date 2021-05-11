@@ -38,6 +38,7 @@ export function auth(state = initState, action) {
         case AuthConstants.GET_COMPONENTS_OF_USER_IN_LINK_REQUEST:
         case AuthConstants.ANSWER_AUTH_QUESTIONS_REQUEST:
         case AuthConstants.CHECK_PASSWORD2_EXITS_REQUEST:
+        case AuthConstants.GET_INFOR_USER_REQUEST:
             return {
                 ...state,
                 isLoading: true,
@@ -53,6 +54,7 @@ export function auth(state = initState, action) {
             };
 
         case AuthConstants.LOGIN_SUCCESS:
+            console.log('login reducersss', action.payload);
             return {
                 ...state,
                 user: action.payload,
@@ -121,6 +123,13 @@ export function auth(state = initState, action) {
                 links: action.payload,
                 calledAPI: CallApiStatus.FINISHED,
             };
+        case AuthConstants.GET_INFOR_USER_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                user: action.payload,
+              //  calledAPI: CallApiStatus.FINISHED,
+            };
 
         case AuthConstants.GET_COMPONENTS_OF_USER_IN_LINK_SUCCESS:
             return {
@@ -155,6 +164,7 @@ export function auth(state = initState, action) {
         case AuthConstants.CHANGE_USER_INFORMATION_FAILE:
         case AuthConstants.CHANGE_USER_PASSWORD_FAILE:
         case AuthConstants.ANSWER_AUTH_QUESTIONS_FAILE:
+        case AuthConstants.GET_INFOR_USER_FAILE:
             return {
                 ...state,
                 isLoading: false,

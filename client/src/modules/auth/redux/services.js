@@ -20,7 +20,8 @@ export const AuthService = {
     changePassword,
     downloadFile,
     answerAuthQuestion,
-    checkExistsPassword2
+    checkExistsPassword2,
+    getInforUser,
 };
 
 async function login(data) {
@@ -152,6 +153,13 @@ function answerAuthQuestion(data) {
 function checkExistsPassword2() {
     return sendRequest({
         url: `${process.env.REACT_APP_SERVER}/auth/profile/check-user-exists-password2`,
+        method: 'GET',
+    }, false, false, 'auth');
+}
+
+function getInforUser() {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/auth/get-user`,
         method: 'GET',
     }, false, false, 'auth');
 }

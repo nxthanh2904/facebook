@@ -6,7 +6,7 @@ import Header from "../header/Header";
 import Sidebar from "../sidebar/Sidebar";
 import Contacts from "../contacts/Contacts";
 import Stories from "../stories/Stories";
-import Form from "../form/Form";
+import Form from "../posts/form/Form";
 import Posts from "../posts/Posts";
 import { lightPrimary } from "../../assets/Colors";
 import Style from "./Style";

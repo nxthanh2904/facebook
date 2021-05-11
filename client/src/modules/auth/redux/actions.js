@@ -19,6 +19,7 @@ export const AuthActions = {
     answerAuthQuestion,
     checkExistsPassword2,
     register,
+    getInforUser,
 }
 
 function login(user) {
@@ -290,5 +291,20 @@ function checkExistsPassword2() {
                 dispatch({ type: AuthConstants.CHECK_PASSWORD2_EXITS_FAILE });
             })
 
+    }
+}
+function getInforUser(){
+    return dispatch => {
+        dispatch({type: AuthConstants.GET_INFOR_USER_REQUEST});
+        AuthService.getInforUser()
+            .then(res=>{
+                dispatch({
+                    type: AuthConstants.GET_INFOR_USER_SUCCESS,
+                    payload: res.data.content
+                });
+            })
+            .catch(err=>{
+                dispatch({type:AuthConstants.GET_INFOR_USER_FAILE})
+            })
     }
 }

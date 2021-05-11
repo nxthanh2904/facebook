@@ -109,8 +109,6 @@ class UploadFile extends Component {
             <React.Fragment>
                 <div className="form-group">
                     <div className="upload btn btn-primary" disabled={disabled} >
-                        <i className="fa fa-folder"></i>
-                        {" " + translate('document.choose_file')}
                         <input className="upload" type="file" name="file" accept={accept} disabled={disabled} style={{ cursor: disabled ? "not-allowed" : 'pointer' }}
                             onChange={this.handleUploadFile} multiple={multiple} />
                     </div>
