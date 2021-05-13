@@ -1,9 +1,18 @@
 const postService = require('./post.services');
+const { createPostValidation } = require('./post.validate')
 
 
-
-exports.addPost = async (req, res) => {
+exports.createPost = async (req, res) => {
     try {
+
+        // const checkValidate = await createPostValidation({ userId: req.user._id });
+        // if (checkValidate.error) {
+        //     return {
+        //         success: false,
+        //         messages: ['validate_error'],
+        //         content: checkValidate.error
+        //     }
+        // }
         let files = [];
         if (req.files !== undefined) {
             req.files.forEach((elem) => {
@@ -12,9 +21,9 @@ exports.addPost = async (req, res) => {
 
             })
         }
+        console.log('body', req.body);
+        const post = await postService.createPost(req.user._id, req.body, files);
 
-        const post = await postService.addPost( req.user._id, req.body, files );
-        
         res.status(200).json({
             success: true,
             messages: ['add_post_success'],
@@ -39,8 +48,8 @@ exports.editPost = async (req, res) => {
 
             })
         }
-        const post = await postService.editPost( req.user._id, req.params.id, req.body, files );
-        
+        const post = await postService.editPost(req.user._id, req.params.id, req.body, files);
+
         res.status(200).json({
             success: true,
             messages: ['edit_post_success'],
@@ -57,8 +66,8 @@ exports.editPost = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
     try {
-        const post = await postService.deletePost( req.params.id );
-        
+        const post = await postService.deletePost(req.params.id);
+
         res.status(200).json({
             success: true,
             messages: ['delete_post_success'],
@@ -75,8 +84,8 @@ exports.deletePost = async (req, res) => {
 
 exports.getPost = async (req, res) => {
     try {
-        const post = await postService.getPost( req.params.id );
-        
+        const post = await postService.getPost(req.params.id);
+
         res.status(200).json({
             success: true,
             messages: ['get_post_success'],
@@ -93,8 +102,8 @@ exports.getPost = async (req, res) => {
 
 exports.getListPost = async (req, res) => {
     try {
-        const post = await postService.getListPost( req.user._id );
-        
+        const post = await postService.getListPost(req.user._id);
+
         res.status(200).json({
             success: true,
             messages: ['get_list_post_success'],
@@ -111,8 +120,8 @@ exports.getListPost = async (req, res) => {
 
 exports.getListPostPerson = async (req, res) => {
     try {
-        const post = await postService.getListPostPerson( req.params.id );
-        
+        const post = await postService.getListPostPerson(req.params.id);
+
         res.status(200).json({
             success: true,
             messages: ['get_list_post_person_success'],
@@ -128,14 +137,30 @@ exports.getListPostPerson = async (req, res) => {
 };
 exports.setComment = async (req, res) => {
     try {
-        const post = await postService.setComment( req.params.id, req.user._id, req.body );
-        
+
+        let files = [];
+         console.log("fieleeeeee", req.files);
+        if (req.files !== undefined) {
+           
+            req.files.forEach((elem) => {
+
+                let path = elem.destination + '/' + elem.filename;
+                files.push(path)
+
+            })
+        }
+        console.log('req id', req.params);
+        console.log('req body', req.body);
+        console.log('req file', files);
+        const post = await postService.setComment(req.params.id, req.user._id, req.body, files);
+
         res.status(200).json({
             success: true,
             messages: ['set_comment_success'],
             content: post
         });
     } catch (error) {
+        console.log('error', error);
         res.status(400).json({
             success: false,
             messages: ['set_comment_faile'],
@@ -146,8 +171,8 @@ exports.setComment = async (req, res) => {
 
 exports.getComment = async (req, res) => {
     try {
-        const post = await postService.getComment( req.params.id );
-        
+        const post = await postService.getComment(req.params.id);
+
         res.status(200).json({
             success: true,
             messages: ['get_comment_success'],
@@ -164,8 +189,8 @@ exports.getComment = async (req, res) => {
 
 exports.likePost = async (req, res) => {
     try {
-        const post = await postService.likePost( req.user._id, req.params.id );
-        
+        const post = await postService.likePost(req.user._id, req.params.id);
+
         res.status(200).json({
             success: true,
             messages: ['like_post_success'],
@@ -182,8 +207,8 @@ exports.likePost = async (req, res) => {
 
 exports.unlikePost = async (req, res) => {
     try {
-        const post = await postService.unlikePost( req.user._id, req.params.id );
-        
+        const post = await postService.unlikePost(req.user._id, req.params.id);
+
         res.status(200).json({
             success: true,
             messages: ['unlike_post_success'],
@@ -200,8 +225,8 @@ exports.unlikePost = async (req, res) => {
 
 exports.reportPost = async (req, res) => {
     try {
-        const post = await postService.reportPost(req.user._id, req.params.id, req.body.description );
-        
+        const post = await postService.reportPost(req.user._id, req.params.id, req.body.description);
+
         res.status(200).json({
             success: true,
             messages: ['report_post_success'],
