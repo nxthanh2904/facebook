@@ -1,0 +1,229 @@
+
+/*--- comment area ---*/
+
+.coment-area {
+    margin-top: 20px;
+    width: 100%;
+	display: none;
+	float: left;
+}
+
+.we-comet {
+    float: left;
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+	margin-bottom: 0;
+}
+
+.we-comet > li {
+    display: inline-block;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.we-comet > li:last-child {
+    margin-bottom: 0;
+}
+
+.comet-avatar {
+    display: inline-block;
+    max-width: 36px;
+    vertical-align: top;
+    width: 36px;
+}
+
+.we-comment {
+    border-bottom: 1px solid #ede9e9;
+    display: inline-block;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    position: relative;
+    vertical-align: top;
+    width: 92%;
+}
+
+.inline-itms > a i {
+    margin-right: 3px;
+}
+.inline-itms > a span {
+    font-size: 11px;
+}
+.inline-itms {
+    display: inline-block;
+    margin-top: 5px;
+    width: 100%;
+}
+
+
+/*.we-comment::before,
+.peoples-mesg-box > ul > li p:before {
+    border-bottom: 10px solid transparent;
+    border-right: 11px solid #ede9e9;
+    border-top: 10px solid transparent;
+    left: -11px;
+    top: 10px;
+    position: absolute;
+    content: '';
+}
+
+.we-comment::after,
+.peoples-mesg-box > ul > li p:after {
+    border-bottom: 8px solid transparent;
+    border-right: 9px solid #fff;
+    border-top: 8px solid transparent;
+    left: -9px;
+    top: 12px;
+    position: absolute;
+    content: '';
+}*/
+
+.we-comet > li ul {
+    border-left: 2px solid #23d2e2;
+    list-style: outside none none;
+    margin-left: 20px;
+    margin-top: 20px;
+    padding-left: 15px;
+}
+
+.we-comet > li ul li {
+    margin-bottom: 20px;
+}
+
+.we-comet li a.showmore {
+    display: table;
+    font-size: 12px;
+    margin: 0 auto;
+    text-transform: capitalize;
+	font-weight: 500;
+}
+
+.we-comet > li ul li:last-child {
+    margin-bottom: 0;
+}
+
+.coment-head {
+    display: inline-block;
+    width: 100%;
+}
+
+.we-comment > h5 {
+    color: #515365;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0;
+    margin-right: 8px;
+    width: auto;
+    text-transform: capitalize;
+}
+
+.we-comment > p {
+    display: inline;
+    font-size: 13.4px;
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.inline-itms > a, 
+.inline-itms > span {
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 10px;
+    text-transform: capitalize;
+}
+
+.coment-head > span {
+    color: #999;
+    font-size: 12px;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+li.post-comment .comet-avatar {
+    display: inline-block;
+    max-width: 30px;
+    vertical-align: top;
+    width: 30px;
+}
+
+.post-comt-box {
+    display: inline-block;
+    padding-left: 15px;
+    position: relative;
+    width: 93%;
+}
+
+.post-comt-box form textarea {
+    background: #edf2f6 none repeat scroll 0 0;
+    border-color: transparent;
+    border-radius: 5px;
+    color: inherit;
+    font-size: 13px;
+    height: 80px;
+    line-height: 16px;
+}
+.post-comt-box form textarea:focus{
+	border-color: rgba(0,0,0,.1);
+}
+
+.add-smiles {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    line-height: 10px;
+}
+
+.add-smiles > span {
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.smiles-bunch {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 5px;
+    top: -63px;
+    font-size: 13px;
+    padding: 5px;
+    position: absolute;
+    right: -8px;
+    text-align: center;
+    width: 150px;
+    display: none;
+    box-shadow: 0px 3px 7px #ccc;
+}
+
+.smiles-bunch.active {
+    display: block;
+}
+
+.smiles-bunch > i {
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+.smiles-bunch::before {
+    border-top: 7px solid #fff;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    position: absolute;
+    right: 11px;
+    bottom: -7px;
+    width: auto;
+}
+
+.smiles-bunch > i:hover {
+    transform: scale(1.1);
+}
+
+.post-comt-box form button {
+    bottom: 2px;
+    position: absolute;
+    right: 0;
+    background: none;
+}
