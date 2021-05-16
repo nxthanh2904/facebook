@@ -7,11 +7,14 @@ import PhotoRoundedIcon from "@material-ui/icons/PhotoRounded";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import Styles from "./Style";
 import { DialogModal, UploadFile } from "../../../common-components";
-
+import { PostActions } from '../redux/actions';
+import { StarRateOutlined } from '@material-ui/icons';
+import { AuthActions } from '../../auth/redux/actions';
 
 
 function CreatePost(props) {
     const classes = Styles();
+    const { user } = props.auth;
     const [state, setState] = useState({
         content: "",
         feeling: "",
@@ -21,14 +24,11 @@ function CreatePost(props) {
 
     });
 
-    console.log("propssss", props);
-
     const onChangeText = (e) => {
         setState({ ...state, content: e.target.value });
     }
 
     function handleUploadFile(value) {
-        console.log('aaaaa', value);
         const { file, urlFile, fileUpload } = state
         if (value.length !== 0) {
             if (file !== value[0].fileName && urlFile !== value[0].urlFile && fileUpload !== value[0].fileUpload) {
@@ -50,16 +50,25 @@ function CreatePost(props) {
     const save = () => {
         const formData = new FormData();
         const { content, images } = state
-        console.log('fffff', content, images);
         if (content) {
+            console.log('imageesss', content);
             formData.append('content', content);
         }
         if (images && images.length) {
+
             images.forEach(x => {
-                formData.append("image", x.fileUpload);
+
+                console.log('imageesss', x.fileUpload);
+                formData.append("post", x.fileUpload);
             })
         }
-
+        props.createPost(formData);
+    }
+    const isValidateForm = () => {
+        const { content, images } = state;
+        if (content || images.length)
+            return true;
+        return false;
     }
     return (
         <DialogModal
@@ -67,57 +76,35 @@ function CreatePost(props) {
             formID="form-create-post"
             title="Create Post"
             func={save} size="50"
-        //disableSubmit={!isValidateForm()}
+            hasNote={false}
+            hasCloseButton={false}
+            disableSubmit={!isValidateForm()}
         >
             <div className={classes.post}>
                 <div className={classes.post__header}>
                     <Avatar
-                        src={"avt.png"}
+                        src={`${process.env.REACT_APP_SERVER}${user.avatar}`}
                     />
                     <div className={classes.header__info}>
-                        <h4>Thành đẹp trai vl</h4>
-                        {/* <p>
-                            <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} units="minute" />
-                        </p> */}
-                    </div>
-                    {/* <MoreHorizOutlinedIcon /> */}
-                </div>
-                <div >
-                    <input type="text"
-                        placeholder={`What's on your mind, Thành`}
-                        onChange={e => onChangeText(e)}
-                    />
-                </div>
-                <div className={classes.upload__media}>
-                    <label className={classes.media__options}>
-                        <VideocamRoundedIcon style={{ color: "red" }} />
-                        <h4>Video</h4>
-                        <UploadFile
-                            accept="image/*,audio/*,video/*"
-                            multiple={true}
-                            show={false}
-                            onChange={handleUploadFile} />
-                    </label>
-                    <label htmlFor="upload-image" className={classes.media__options}>
-                        <PhotoRoundedIcon style={{ color: "green" }} />
-                        <h4>Photo</h4>
-                    </label>
-                    <div className={classes.media__options}>
-                        <EmojiEmotionsOutlinedIcon style={{ color: "orange" }} />
-                        <h4>Feeling/Activity</h4>
+                        <h4>{user.surName} {user.firstName}</h4>
                     </div>
                 </div>
-                <div>
-                    {
-                        state.images && state.images.length > 1 ?
-                            state.images.map((image, i) => {
-                                return (
-                                    <div >
-                                        <img src={image.urlFile} width="80px" height="80px" alt="img" />
-                                    </div>
-                                )
-                            }) : null
-                    }
+                <textarea type="text"
+                    className={classes.input_text}
+                    placeholder={`What's on your mind, ${user.firstName} ?`}
+                    onChange={e => onChangeText(e)}
+                />
+                <div className="form-inline" style={{ width: "100%" }}>
+                    <strong style={{ display: "inline", marginRight: 10 }}>Thêm vào bài viết</strong>
+                    <VideocamRoundedIcon style={{ color: "red", marginRight: 10 }} />
+                    <PhotoRoundedIcon style={{ color: "green", marginRight: 10 }} />
+                    <EmojiEmotionsOutlinedIcon style={{ color: "orange", marginRight: 10 }} />
+
+                    <UploadFile
+                        accept="image/*,audio/*,video/*"
+                        multiple={true}
+                        // show={false}
+                        onChange={handleUploadFile} />
                 </div>
             </div>
 
@@ -134,7 +121,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-
+    createPost: PostActions.createPost,
+    changeAvatar: AuthActions.changeAvatar,
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslate(CreatePost));

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
+import { withTranslate } from 'react-redux-multilingual';
 import { useSelector } from "react-redux";
 import { Chip, Paper, Divider, LinearProgress } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
@@ -9,10 +11,11 @@ import Styles from "./Style";
 import swal from "@sweetalert/with-react";
 import { UploadFile, DialogModal } from '../../../common-components/';
 import CreatePost from "../post/createPost";
-import { getStorage } from '../../../config';
-const Form = () => {
+//import {AuthActions} from '../../auth/redux/actions'
+const Form = (props) => {
   const classes = Styles();
   // const { displayName, photoURL } = useSelector((state) => state.user);
+  const { user } = props.auth
 
   const [uploadData, setUploadData] = useState({
     description: "",
@@ -52,7 +55,6 @@ const Form = () => {
 
   }
 
-
   function handleUploadFile(value) {
     const { file, urlFile, fileUpload } = state
     if (value.length !== 0) {
@@ -76,14 +78,15 @@ const Form = () => {
   }
 
 
-  const displayName = "NTQ"
   return (
     <Paper className={classes.upload}>
       <div className={classes.upload__header}>
-        <Avatar />
+        <Avatar 
+          src={`${process.env.REACT_APP_SERVER}${user.avatar}`}
+        />
         <form className={classes.header__form} onSubmit={handleSubmitButton}>
           <input
-            placeholder={`What's on your mind, ${displayName}?`}
+            placeholder={`What's on your mind, ${user.firstName} ?`}
             value={uploadData.description}
             onFocus={toggleCreatePost}
             onChange={(e) => setUploadData({ ...uploadData, description: e.target.value })}
@@ -133,4 +136,11 @@ const Form = () => {
   );
 };
 
-export default Form;
+const mapStateToProps = state =>{
+  return state;
+}
+
+const mapDispatchToProps ={
+ // getInforUser: AuthActions.getInforUser
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslate(Form));

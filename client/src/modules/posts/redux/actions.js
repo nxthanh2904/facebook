@@ -8,6 +8,7 @@ export const PostActions = {
     setComment,
     likePost,
     dislikePost,
+    getPostById,
 }
 
 function createPost(data) {
@@ -23,6 +24,24 @@ function createPost(data) {
             .catch((err) => {
                 dispatch({
                     type: PostConstants.CREATE_POST_FAILE
+                })
+            })
+    }
+}
+
+function getPostById(id) {
+    return dispatch => {
+        dispatch({ type: PostConstants.GET_POST_BY_ID_REQUEST });
+        PostServices.getPostById(id)
+            .then(res => {
+                dispatch({
+                    type: PostConstants.GET_POST_BY_ID_SUCCESS,
+                    payload: res.data.content
+                })
+            })
+            .catch((err) => {
+                dispatch({
+                    type: PostConstants.GET_POST_BY_ID_FAILE
                 })
             })
     }

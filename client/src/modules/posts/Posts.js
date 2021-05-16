@@ -4,74 +4,49 @@ import FlipMove from "react-flip-move";
 import Post from "./post/Post";
 import db from "../../firebase";
 import moment from "moment";
-
-const Posts = () => {
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { withTranslate } from 'react-redux-multilingual';
+import { PostActions } from './redux/actions';
+const Posts = (props) => {
   const classes = Style();
+  const { type } = props;
+  useEffect(() => {
 
-  const [posts, setPosts] = useState([]);
+    props.getNewFeed();
+  }, []);
 
-  // useEffect(() => {
-  //   const unsubscribe = db
-  //     .collection("posts")
-  //     .orderBy("timestamp", "desc")
-  //     .onSnapshot((snap) => setPosts(snap.docs.map((doc) => ({ id: doc.id, data: doc.data() }))));
-  //   return unsubscribe;
-  // }, []);
+  const { posts } = props.post;
+  const { user } = props.auth;
 
+  const checkTypeVideo = (post) => {
+    if (typeof post === 'string' || post instanceof String) {
+      let index = post.lastIndexOf(".");
+      let typeFile = post.substring(index + 1, post.length).toLowerCase();
+      if (typeFile === "mp4") {
+        return true;
+      }
+      else return false;
+    }
+    else return false;
+  }
 
-  const fakeData = [
-    {
-      key: "1",
-      profile: "",
-      username: "NTQ",
-      timestamp: moment("18-06-2021", "DD-MM-YYYY"),
-      description: "QyDsd",
-      // fileType: { post.data.fileType }
-      // fileData: { post.data.fileData }
-    },
-    {
-      key: "2",
-      profile: "",
-      username: "NTD",
-      timestamp: moment("18-06-2021", "DD-MM-YYYY"),
-      description: "QyDsd",
-      // fileType: { post.data.fileType }
-      // fileData: { post.data.fileData }
-    },
-    {
-      key: "3",
-      profile: "",
-      username: "NQL",
-      timestamp: moment("18-06-2021", "DD-MM-YYYY"),
-      description: "QyDsd",
-      // fileType: { post.data.fileType }
-      // fileData: { post.data.fileData }
-    },
-    {
-      key: "4",
-      profile: "",
-      username: "NTQD",
-      timestamp: moment("18-06-2021", "DD-MM-YYYY"),
-      description: "QyDsd",
-      // fileType: { post.data.fileType }
-      // fileData: { post.data.fileData }
-    },
-  ]
+  let listPost = [];
+  if (type === "profile") {
+    listPost = posts.filter(post => post.creator._id === user._id)
+  }
+  else if (type === "watch") {
+    listPost = posts.filter((post) => checkTypeVideo(post.images[0]))
+  }
+  else listPost = posts;
 
   return (
     <div className={classes.posts}>
       <FlipMove style={{ width: "100%" }}>
-        {fakeData.map((post) => (
+        {listPost ? listPost.map((post) => (
           <Post
-            key={post.id}
-            profile={post.profile}
-            username={post.username}
-            timestamp={post.timestamp}
-            description={post.description}
-            fileType={post.fileType}
-            fileData={post.fileData}
+            newFeed={post}
           />
-        ))}
+        )) : <></>}
       </FlipMove>
     </div>
   );
@@ -87,4 +62,12 @@ const Style = makeStyles((theme) => ({
   },
 }));
 
-export default Posts;
+const mapStateToProps = (state => {
+  return state
+});
+
+const mapDispatchToProps = {
+  getNewFeed: PostActions.getNewFeed
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslate(Posts));

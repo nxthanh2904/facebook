@@ -8,6 +8,7 @@ export const CallApiStatus = {
 var initState = {
     calledAPI: CallApiStatus.INITIALIZED,
     posts: [],
+    postItem: {},
     isLoading: false,
 }
 
@@ -18,6 +19,7 @@ export function post(state = initState, action) {
         case PostConstants.SET_COMMENT_REQUEST:
         case PostConstants.LIKE_POST_REQUEST:
         case PostConstants.DISLIKE_POST_REQUEST:
+        case PostConstants.GET_POST_BY_ID_REQUEST:
             return {
                 ...state,
                 isLoading: false,
@@ -36,6 +38,12 @@ export function post(state = initState, action) {
                 ...state,
                 isLoading: false,
                 posts: action.payload
+            }
+        case PostConstants.GET_POST_BY_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                postItem: action.payload
             }
         case PostConstants.SET_COMMENT_SUCCESS:
             // let x = state.posts.filter(e => (String(e._id) === String(action.payload._id)) ? action.payload : e)
@@ -63,6 +71,7 @@ export function post(state = initState, action) {
         case PostConstants.SET_COMMENT_FAILE:
         case PostConstants.LIKE_POST_FAILE:
         case PostConstants.DISLIKE_POST_FAILE:
+        case PostConstants.GET_POST_BY_ID_FAILE:
             return {
                 ...state,
                 isLoading: false,
