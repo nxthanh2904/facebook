@@ -39,29 +39,29 @@ exports.createPost = async (req, res) => {
 };
 
 exports.editPost = async (req, res) => {
-    try {
-        let files = [];
-        if (req.files !== undefined) {
-            req.files.forEach((elem) => {
-                let path = elem.destination + '/' + elem.filename;
-                files.push(path)
+  //  try {
+        // let files = [];
+        // if (req.files !== undefined) {
+        //     req.files.forEach((elem) => {
+        //         let path = elem.destination + '/' + elem.filename;
+        //         files.push(path)
 
-            })
-        }
-        const post = await postService.editPost(req.user._id, req.params.id, req.body, files);
+        //     })
+        // }
+        const post = await postService.editPost( req.params.id, req.body);
 
         res.status(200).json({
             success: true,
             messages: ['edit_post_success'],
             content: post
         });
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            messages: ['edit_post_faile'],
-            content: error
-        });
-    }
+    // } catch (error) {
+    //     res.status(400).json({
+    //         success: false,
+    //         messages: ['edit_post_faile'],
+    //         content: error
+    //     });
+    // }
 };
 
 exports.deletePost = async (req, res) => {
@@ -70,7 +70,7 @@ exports.deletePost = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            messages: ['delete_post_success'],
+            messages: ['Xóa bài thành công'],
             content: post
         });
     } catch (error) {

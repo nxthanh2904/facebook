@@ -5,7 +5,6 @@ const Notification = require('../../models/notification')
 const fs = require("fs");
 
 exports.createPost = async (id, data, files = undefined) => {
-    console.log('sssssss', id, data, files);
     let listfile = []
     if (files) {
         for (let i in files) {
@@ -13,9 +12,8 @@ exports.createPost = async (id, data, files = undefined) => {
             listfile.push(file)
         }
     }
-    console.log(data.content, listfile.length);
-    if (!(data.content && listfile.length))
-        return null;
+    if (!(data.content || listfile.length))
+        throw['null']
     let post = await Post.create({
         creator: id,
         created: new Date(),
@@ -33,8 +31,9 @@ exports.createPost = async (id, data, files = undefined) => {
 };
 
 exports.editPost = async (id, data, files = undefined) => {
+    console.log('ddddddd',data);
     let post = await Post.findById({ _id: id })
-    post.described = data.described
+    post.content = data.content
     post.modified = new Date()
     if (files) {
         if (post.image.length !== 0) {
@@ -48,14 +47,18 @@ exports.editPost = async (id, data, files = undefined) => {
 
         post.image = files
     }
-    post.save();
-
-    return post;
+    await post.save()
+    
+    let editPost = await Post.findById(id).populate([
+        { path: "creator", populate: "users", select: "firstName surName avatar" },
+        { path: "comment.creator", populate: 'users', select: "firstName surName avatar" }
+    ])
+    return editPost;
 };
 
 exports.deletePost = async (id) => {
     let post = await Post.findById({ _id: id })
-    if (post.image.length !== 0) {
+    if (post.images.length !== 0) {
         for (let i in post.image) {
             if (fs.existsSync(post.image[i])) {
                 fs.unlinkSync(post.image[i])
@@ -76,7 +79,6 @@ exports.getPost = async (id) => {
         { path: "creator", populate: "users", select: "firstName surName avatar" },
         { path: "comment.creator", populate: 'users', select: "firstName surName avatar" }
     ])
-    console.log(post);
     return post
 };
 
