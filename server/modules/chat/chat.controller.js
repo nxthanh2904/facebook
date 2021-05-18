@@ -1,7 +1,7 @@
 const ChatServices = require('./chat.service');
 
 exports.getAllConversations = async (req, res) => {
-  //  try {
+   // try {
         const conversations = await ChatServices.getAllConversations(req.user._id);
         res.status(200).json({
             success: true,

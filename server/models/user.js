@@ -37,15 +37,18 @@ const UserSchema = new Schema({
         type: Date
     },
     block: [{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "users"
     }],
     listfriends: [{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "users"
     }],
     active: {
         type: Boolean,
+    },
+    coverImage: {
+        type: String,
     }
 }, {timestamps: true})
 

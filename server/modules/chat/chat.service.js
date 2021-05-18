@@ -8,7 +8,8 @@ const Chat = require('../../models/chat')
 exports.getAllConversations = async (id) => {
     let conversations = await Chat.find({ listuser: id })
         .populate([
-            { path: "listuser", select: "id active firstName surName avatar birthday" }
+            { path: "listuser", select: "id active firstName surName avatar birthday" },
+             { path: "message.creator", select: "id active firstName surName avatar birthday" }
         ]).lean();
 
     for (let i in conversations) {
@@ -33,5 +34,23 @@ exports.createConversation = async (data) =>{
     return conversation;
 }
 
+exports.saveMessage = async (data) => {
+
+    let conversation = await Chat.findById(data.roomId);
+    const message = {
+        creator: data.creator._id,
+        content: data.message,
+    };
+    conversation.message.push(message);
+    await conversation.save();
+    //console.log('saveeeee', conversation);
+    return conversation;
+}
+
+
+exports.getConversation = async (data) => {
+    let conversation = await Chat.findById(data);
+    return conversation;
+}
 
 

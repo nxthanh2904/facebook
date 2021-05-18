@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const SearchSchema = new Schema({
     creator: {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "users"
     },
     data: [{

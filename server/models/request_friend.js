@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const RequestFriendSchema = new Schema({
     from : {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "users"
     },
     to: {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "users"
     },
     createAt: {

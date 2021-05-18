@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     creator: {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "users"
     },
     content: {
@@ -25,7 +25,7 @@ const PostSchema = new Schema({
     }],
     comment: [{
         creator: {
-            type: String,
+            type:  Schema.Types.ObjectId,
             ref: "users"
         },
         described: {
@@ -44,7 +44,7 @@ const PostSchema = new Schema({
 
     reactions: [{
         userId: {
-            type: String,
+            type:  Schema.Types.ObjectId,
             ref: "users"
         },
         type: {
@@ -55,11 +55,11 @@ const PostSchema = new Schema({
         }
     }],
     group: {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "group"
     },
     usersHidePost: [{
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "users"
     }],
 
@@ -69,7 +69,7 @@ const PostSchema = new Schema({
             type: Date
         },
         creator: {
-            type: String,
+            type:  Schema.Types.ObjectId,
             ref: "users"
         },
         description: {

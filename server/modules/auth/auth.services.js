@@ -149,8 +149,8 @@ exports.login = async (data) => {
             surName: user.surName,
             token: token,
             avatar: user.avatar,
+            listfriend: user.listfriend,
         };
-        console.log('server', payload)
         return {
             payload: payload,
             success: true,
@@ -198,12 +198,13 @@ exports.changeInformation = async (
 
 exports.changeAvatar = async (
     id,
-    described,
+    content,
     avatar = undefined
 ) => {
 
     let user = await User.findById(id)
     let deleteAvatar = "." + user.avatar;
+    let post;
     if (avatar) {
         if (
             deleteAvatar !== "./upload/avatars/user.jpg" &&
@@ -211,16 +212,17 @@ exports.changeAvatar = async (
         )
             fs.unlinkSync(deleteAvatar);
         user.avatar = avatar;
-        let post = await Post.create({
-            described: described,
-            status: "Thay đổi ảnh đại diện",
-            image: avatar,
-            creator: id
+        post = await Post.create({
+            creator: id,
+            created: new Date(),
+            content: content ? content : "Mình thay ảnh đại diện rồi nè !!",
+            status: "Đã thay đổi ảnh đại diện",
+            images: avatar
         })
     }
     await user.save();
 
-    return user;
+    return { user, post };
 };
 
 exports.getProfile = async (id) => {
@@ -233,12 +235,11 @@ exports.getProfile = async (id) => {
 };
 exports.getUser = async (id) => {
     let user = await User.findById(id)
-        .select("id active firstName surName avatar birthday listfriends")
+        .select("id active firstName surName avatar birthday listfriends  gender createdAt")
         .populate([
-            { path: "listfriends", select: "id active firstName surName avatar birthday" },
+            { path: "listfriends", select: "id active firstName surName avatar birthday gender createdAt" },
         ]);
     if (user === null) throw ["user_not_found"];
-    // console.log('user dayyyyyy', user);
     return user;
 };
 
