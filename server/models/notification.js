@@ -3,19 +3,19 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     creator: {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "users"
     },
     data: [{
         post: {
-            type: String,
+            type:  Schema.Types.ObjectId,
             ref: "posts"
         },
         type: {
             type: String
         },
         from: {
-            type: String,
+            type:  Schema.Types.ObjectId,
             ref: "users"
         },
         createAt: {

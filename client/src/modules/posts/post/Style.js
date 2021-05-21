@@ -23,7 +23,6 @@ export default makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 10,
     "& > .MuiAvatar-root": {
       cursor: "pointer",
     },
@@ -81,6 +80,10 @@ export default makeStyles((theme) => ({
           transform: "scale(1.0)",
         },
       },
+    },
+    "& > div": {
+      width: "100% !important",
+      height: "auto",
     },
   },
   post__footer: {
@@ -147,5 +150,10 @@ export default makeStyles((theme) => ({
         fontSize: 12,
       },
     },
+  },
+  input_text: {
+    fontSize: 24,
+    border: "none",
+    width: "100%",
   },
 }));

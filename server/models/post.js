@@ -3,67 +3,79 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     creator: {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: "users"
     },
-    described: {
+    content: {
         type: String,
     },
-    media: {
+
+    feeling: {
         type: String,
     },
-    modified:{
+
+    activity: {
         type: String,
     },
-    image: [{
+    images: [{
+        type: String,
+    }],
+    videos: [{
         type: String,
     }],
     comment: [{
-       creator: {
-           type: String,
-           ref: "users"
-       },
-       described: {
-           type: String
-       },
-       createAt: {
-           type: Date
-       } 
-    }],
-    created: {
-        type: Date
-    },
-    like: [{
         creator: {
-            type: String,
+            type:  Schema.Types.ObjectId,
             ref: "users"
+        },
+        described: {
+            type: String
         },
         createAt: {
             type: Date
-        } 
-     }],
-    status: {
-        type: String
+        },
+        images: [{
+            type: String,
+        }],
+        videos: [{
+            type: String,
+        }],
+    }],
+
+    reactions: [{
+        userId: {
+            type:  Schema.Types.ObjectId,
+            ref: "users"
+        },
+        type: {
+            type: Number, //1: like 2: love 3: wow 4: sad 5:angry
+        },
+        createAt: {
+            type: Date
+        }
+    }],
+    group: {
+        type:  Schema.Types.ObjectId,
+        ref: "group"
     },
-    banned: {
-        type: String
-    },
-    // Khóa bình luận
-    cancomment: {
-        type: String
-    },
+    usersHidePost: [{
+        type:  Schema.Types.ObjectId,
+        ref: "users"
+    }],
+
+
     reported: [{
         createAt: {
             type: Date
         },
         creator: {
-            type: String,
+            type:  Schema.Types.ObjectId,
             ref: "users"
         },
         description: {
             type: String,
         }
     }]
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('posts', PostSchema);

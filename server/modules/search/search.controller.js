@@ -1,11 +1,9 @@
 const searchService = require('./search.services');
 
-
-
 exports.searchPost = async (req, res) => {
     try {
-        const post = await searchService.searchPost(req.user._id, req.body.keyword);
-        
+        const post = await searchService.searchPost(req.body.keyword);
+
         res.status(200).json({
             success: true,
             messages: ['search_post_success'],
@@ -24,7 +22,7 @@ exports.searchPost = async (req, res) => {
 exports.getSearchPost = async (req, res) => {
     try {
         const search = await searchService.getSearchPost(req.user._id);
-        
+
         res.status(200).json({
             success: true,
             messages: ['get_search_post_success'],
@@ -42,7 +40,7 @@ exports.getSearchPost = async (req, res) => {
 exports.deleteSearch = async (req, res) => {
     try {
         const search = await searchService.deleteSearch(req.user._id, req.params.id);
-        
+
         res.status(200).json({
             success: true,
             messages: ['delete_search_post_success'],
@@ -62,7 +60,7 @@ exports.deleteSearch = async (req, res) => {
 exports.deleteAllSearch = async (req, res) => {
     try {
         const search = await searchService.deleteAllSearch(req.user._id);
-        
+
         res.status(200).json({
             success: true,
             messages: ['delete_all_search_post_success'],

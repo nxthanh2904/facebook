@@ -2,33 +2,36 @@ const multer = require("multer");
 const jwt = require('jsonwebtoken');
 const CryptoJS = require("crypto-js");
 
-const auth =  async (req, res, next) => {
+const auth = async (req, res, next) => {
+    try {
+
+        const token = req.header("auth-token");
+        if (!token) throw ["access_denied"];
+
+        let verified;
         try {
-            const token = req.header("auth-token"); 
-            if (!token) throw ["access_denied"];
-
-            let verified;
-            try {
-                verified = await jwt.verify(token, process.env.TOKEN_SECRET);
-            } catch (error) {
-                throw ["access_denied"];
-            }
-
-            req.user = verified;
-            req.token = token;
-            next();
+            verified = await jwt.verify(token, process.env.TOKEN_SECRET);
         } catch (error) {
-            res.status(400).json({
-                success: false,
-                message: "Invalid token!!",
-            });
+            throw ["access_denied"];
         }
+
+        req.user = verified;
+        req.token = token;
+        next();
+    } catch (error) {
+        console.log('eeeeeeeeeeee');
+        res.status(400).json({
+            success: false,
+            message: "Invalid token!!",
+        });
     }
+}
 
 const uploadFile = (arrayFile, type) => {
     const staticPath = [
         '/avatars',
-        '/posts'
+        '/posts',
+        '/comments'
     ]
 
     let getFile = multer({
@@ -38,8 +41,8 @@ const uploadFile = (arrayFile, type) => {
                     if (staticPath.includes(arrayFile[0].path)) {
                         cb(null, `./upload${arrayFile[0].path}`)
                     }
-                }else if( type === "field"){
-                    for(let i in arrayFile){
+                } else if (type === "field") {
+                    for (let i in arrayFile) {
                         if (staticPath.indexOf(arrData[i].path) !== -1) {
                             cb(null, `./upload${arrData[i].path}`);
                         }
@@ -55,7 +58,7 @@ const uploadFile = (arrayFile, type) => {
                     `${req.user._id}_${Date.now()}_` +
                     CryptoJS.MD5(oldNameFile).toString();
                 cb(null, `${hash}.${extend[extend.length - 1]}`);
-               
+
             }
         })
     })

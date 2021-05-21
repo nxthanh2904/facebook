@@ -11,6 +11,7 @@ export const PostServices = {
     setComment,
     likePost,
     dislikePost,
+    getPostById,
 }
 
 async function createPost(data) {
@@ -24,6 +25,14 @@ async function createPost(data) {
 async function getNewFeed() {
     return sendRequest({
         url: `${process.env.REACT_APP_SERVER}/post/get-list-post`,
+        method: 'GET',
+
+    }, false, false, 'post')
+}
+
+async function getPostById(id) {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/post/get-post/${id}`,
         method: 'GET',
 
     }, false, false, 'post')

@@ -3,13 +3,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    name: {
+    firstName: {
+        type: String
+    },
+    surName: {
+        type: String
+    },
+    gender: {
         type: String
     },
     code: {
         type: String
-    }, 
-    phoneNumber: {
+    },
+    email: {
         type: String,
         require: true
     },
@@ -27,20 +33,23 @@ const UserSchema = new Schema({
     token: [{
         type: String
     }],
-    birth: {
+    birthday: {
         type: Date
     },
     block: [{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "users"
     }],
     listfriends: [{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "users"
     }],
     active: {
         type: Boolean,
+    },
+    coverImage: {
+        type: String,
     }
-})
+}, {timestamps: true})
 
 module.exports = mongoose.model('users', UserSchema);

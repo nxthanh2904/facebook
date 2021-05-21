@@ -5,6 +5,7 @@ exports.register = async (req, res) => {
         console.log("show my body ", req.body);
 
         const User = await AuthService.register(req.body);
+        console.log(User);
         if (User.success) {
             res.status(200).json({
                 success: true,
@@ -18,6 +19,7 @@ exports.register = async (req, res) => {
             })
         }
     } catch (error) {
+        console.log(error);
         res.status(400).json({
             success: false,
             message: ['register_faile'],
@@ -72,7 +74,7 @@ exports.checkVerifyCode = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const User = await AuthService.login(req.body);
-
+        console.log(User);
         if (User.success) {
             res.status(200).json({
                 success: true,
@@ -141,28 +143,28 @@ exports.changeInformation = async (req, res) => {
 
 exports.changeAvatar = async (req, res) => {
 
-    try {
+  //  try {
         let avatar;
         if (req.file) {
             let path = req.file.destination + '/' + req.file.filename;
             avatar = path.substr(1, path.length)
         }
         console.log("avta", avatar)
-        const profile = await AuthService.changeAvatar(req.user._id, req.body.described , avatar);
+        const profile = await AuthService.changeAvatar(req.user._id, req.body.content, avatar);
 
         res.status(200).json({
             success: true,
             messages: ['change_avatar_success'],
             content: profile
         });
-    } catch (error) {
+    // } catch (error) {
 
-        res.status(400).json({
-            success: false,
-            messages: Array.isArray(error) ? error : ['change_avatar_faile'],
-            content: error
-        });
-    }
+    //     res.status(400).json({
+    //         success: false,
+    //         messages: Array.isArray(error) ? error : ['change_avatar_faile'],
+    //         content: error
+    //     });
+    // }
 };
 
 exports.getProfile = async (req, res) => {
@@ -178,6 +180,23 @@ exports.getProfile = async (req, res) => {
         res.status(400).json({
             success: false,
             messages: Array.isArray(error) ? error : ['show_profile_faile'],
+            content: error
+        });
+    }
+};
+exports.getUser = async (req, res) => {
+    try {
+        const profile = await AuthService.getUser(req.user._id);
+
+        res.status(200).json({
+            success: true,
+            messages: ['get_user_success'],
+            content: profile
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            messages: Array.isArray(error) ? error : ['get_user_faile'],
             content: error
         });
     }

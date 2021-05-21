@@ -12,10 +12,12 @@ import { NotFound } from "../modules/not-found/components";
 import Login from "../modules/auth/components/login";
 import ResetPassword from "../modules/auth/components/resetPassword";
 import Home from "../modules/home/home";
+import Watch from "../modules/watch/watch";
 import General from "../modules/profile/component/general";
 import Profile from "../modules/profile/component/profile";
 import Listfriend from "../modules/profile/component/friend/Listfriend";
-
+import Chat from '../modules/messenger/component/chat';
+import ViewSinglePost from "../modules/posts/post/viewSinglePost";
 
 class Routes extends Component {
     render() {
@@ -40,10 +42,28 @@ class Routes extends Component {
                         component={Home}
                     />
                     <PrivateRoute
-                        // exact={true}
                         path={"/profile"}
                         pageName={"Profile"}
                         component={Profile}
+                    />
+
+                    <PrivateRoute
+                        path={"/watch"}
+                        pageName={"Watch"}
+                        component={Watch}
+                    />
+
+                    <PrivateRoute
+                        // exact={true}
+                        path={"/messenger"}
+                        pageName={"Chat"}
+                        component={Chat}
+                    />
+                    <PrivateRoute
+                        // exact={true}
+                        path={"/post/:id"}
+                        pageName={"View Post"}
+                        component={ViewSinglePost}
                     />
                     <AuthRoute
                         exact

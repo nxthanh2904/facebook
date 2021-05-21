@@ -3,13 +3,14 @@ const Schema = mongoose.Schema;
 
 const ChatSchema = new Schema({
     listuser: [{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "users",
     }],
     message: [{
         creator: {
-            type: String,
-            ref: "users"
+            type: Schema.Types.ObjectId,
+            ref: "users",
+
         },
         content: {
             type: String
