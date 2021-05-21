@@ -55,7 +55,7 @@ const Chat = (props) => {
         });
       
        socket.on("roomData", (data) => {
-       });
+      });
       
     },[conversations.length]);
   // ham gửi tin nhắn
@@ -81,10 +81,8 @@ const Chat = (props) => {
   return (
 
     <LayoutOnlyHeader>
-      {/* <Header /> */}
       <div className="outerContainer">
         <div className="col-md-3" style={{ minWidth: "365px", padding: 0, backgroundColor: "#223457" }}>
-          {/* <div className="col-md-3" style={{ backgroundColor: "#3F4143" }}> */}
           <TextContainer users={conversations} setCurrentConversation={joinConversation} />
         </div>
 
