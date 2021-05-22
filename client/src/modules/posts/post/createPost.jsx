@@ -28,15 +28,48 @@ function CreatePost(props) {
         setState({ ...state, content: e.target.value });
     }
 
-    function handleUploadFile(value) {
-        console.log(value);
+   function handleUploadFile(value) {
+        const { file, urlFile, fileUpload } = state
+        if (value.length !== 0) {
+            if (file !== value[0].fileName && urlFile !== value[0].urlFile && fileUpload !== value[0].fileUpload) {
+                const newImage = {
+                    file: value[value.length - 1].fileName,
+                    urlFile: value[value.length - 1].urlFile,
+                    fileUpload: value[value.length - 1].fileUpload
+                }
+                console.log('aaaaaaaaaaaaaaaaaaaaaa', newImage);
+                setState({
+                    ...state,
+                    images: [...state.images, newImage]
+                })
+            }
+        }
+
     }
 
 
-    const save = () => {
-       console.log('aaaaa');
+     const save = () => {
+        const formData = new FormData();
+        const { content, images } = state
+        if (content) {
+            console.log('imageesss', content);
+            formData.append('content', content);
+        }
+        if (images && images.length) {
+
+            images.forEach(x => {
+
+                console.log('imageesss', x.fileUpload);
+                formData.append("post", x.fileUpload);
+            })
+        }
+        if (feeling) {
+            formData.append("feeling_code", feeling.code);
+            formData.append("feeling_name", feeling.name);
+        }
+        props.createPost(formData);
     }
-    const isValidateForm = () => {
+  const isValidateForm = () => {
         const { content, images } = state;
         if (content || images.length)
             return true;
