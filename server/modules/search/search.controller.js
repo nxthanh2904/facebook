@@ -74,3 +74,4 @@ exports.deleteAllSearch = async (req, res) => {
         });
     }
 };
+
