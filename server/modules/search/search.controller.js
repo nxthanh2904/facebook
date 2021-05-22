@@ -74,3 +74,77 @@ exports.deleteAllSearch = async (req, res) => {
         });
     }
 };
+
+
+// 
+
+exports.searchPost1 = async (req, res) => {
+    try {
+        const post = await searchService.searchPost(req.body.keyword);
+
+        res.status(200).json({
+            success: true,
+            messages: ['search_post_success'],
+            content: post
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            messages: ['search_post_faile'],
+            content: error
+        });
+    }
+};
+
+exports.searchPost2 = async (req, res) => {
+    try {
+        const post = await searchService.searchPost(req.body.keyword);
+
+        res.status(200).json({
+            success: true,
+            messages: ['search_post_success'],
+            content: post
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            messages: ['search_post_faile'],
+            content: error
+        });
+    }
+};
+
+exports.searchPost3 = async (req, res) => {
+    try {
+        const post = await searchService.searchPost(req.body.keyword);
+
+        res.status(200).json({
+            success: true,
+            messages: ['search_post_success'],
+            content: post
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            messages: ['search_post_faile'],
+            content: error
+        });
+    }
+};
+exports.searchPost4 = async (req, res) => {
+    try {
+        const post = await searchService.searchPost(req.body.keyword);
+
+        res.status(200).json({
+            success: true,
+            messages: ['search_post_success'],
+            content: post
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            messages: ['search_post_faile'],
+            content: error
+        });
+    }
+};
