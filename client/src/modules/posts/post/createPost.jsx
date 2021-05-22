@@ -29,40 +29,12 @@ function CreatePost(props) {
     }
 
     function handleUploadFile(value) {
-        const { file, urlFile, fileUpload } = state
-        if (value.length !== 0) {
-            if (file !== value[0].fileName && urlFile !== value[0].urlFile && fileUpload !== value[0].fileUpload) {
-                const newImage = {
-                    file: value[value.length - 1].fileName,
-                    urlFile: value[value.length - 1].urlFile,
-                    fileUpload: value[value.length - 1].fileUpload
-                }
-                setState({
-                    ...state,
-                    images: [...state.images, newImage]
-                })
-            }
-        }
-
+        console.log(value);
     }
 
 
     const save = () => {
-        const formData = new FormData();
-        const { content, images } = state
-        if (content) {
-            console.log('imageesss', content);
-            formData.append('content', content);
-        }
-        if (images && images.length) {
-
-            images.forEach(x => {
-
-                console.log('imageesss', x.fileUpload);
-                formData.append("post", x.fileUpload);
-            })
-        }
-        props.createPost(formData);
+       console.log('aaaaa');
     }
     const isValidateForm = () => {
         const { content, images } = state;
