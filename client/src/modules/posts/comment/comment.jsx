@@ -1,6 +1,7 @@
 import { Avatar } from '@material-ui/core';
 import moment from 'moment';
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import ReactPlayer from 'react-player';
 import { connect } from 'react-redux';
 import { withTranslate } from 'react-redux-multilingual';
@@ -9,6 +10,7 @@ import { getStorage } from '../../../config';
 import { PostActions } from '../redux/actions';
 import Style from "./../post/Style";
 import "./comment.css";
+import { AuthActions } from '../../auth/redux/actions';
 
 const Comment = (props) => {
   const classes = Style();
@@ -107,10 +109,16 @@ const Comment = (props) => {
           return (
             <li key={key}>
               <div className="comet-avatar" style={{ marginTop: "10px" }}>
-                <Avatar src={`${process.env.REACT_APP_SERVER}${cmt?.creator?.avatar}`} />
+                <Link to={`/profile/${cmt.creator?._id}`} onClick={() => props.getProfileById(cmt.creator?._id)}>
+                  <Avatar
+                    src={`${process.env.REACT_APP_SERVER}${cmt?.creator?.avatar}`}
+                  />
+                </Link>
               </div>
               <div className="we-comment">
-                <h5><a href="#" style={{ fontSize: "15px", fontWeight: "bold" }}>{cmt.creator?.surName} {cmt.creator?.firstName}</a></h5>
+                <h5>
+                  <Link to={`/profile/${cmt.creator?._id}`} onClick={() => props.getProfileById(cmt.creator?._id)} style={{ fontSize: "15px", fontWeight: "bold" }}>{cmt.creator?.surName} {cmt.creator?.firstName}</Link>
+                </h5>
                 <br />
                 <p>{cmt.described}</p>
                 {cmt.images.length ?
@@ -182,6 +190,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setComment: PostActions.setComment,
   getPostById: PostActions.getPostById,
+  getProfileById: AuthActions.getProfileById,
 }
 
 
