@@ -1,0 +1,36 @@
+.section{
+    background: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px #ccc;
+}
+
+.list_user{
+    padding: 10px 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+.user_name{
+    color: #333;
+    font-size: 16px;
+    display: block;
+    font-weight: 600;
+}
+
+.is_fr{
+    font-size: 13;
+    color: #777
+}
+
+.header_user_post{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0px;
+}
+
+.reactions{
+    display: flex;
+    align-items: center;
+}
