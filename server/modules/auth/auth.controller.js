@@ -143,20 +143,20 @@ exports.changeInformation = async (req, res) => {
 
 exports.changeAvatar = async (req, res) => {
 
-  //  try {
-        let avatar;
-        if (req.file) {
-            let path = req.file.destination + '/' + req.file.filename;
-            avatar = path.substr(1, path.length)
-        }
-        console.log("avta", avatar)
-        const profile = await AuthService.changeAvatar(req.user._id, req.body.content, avatar);
+    //  try {
+    let avatar;
+    if (req.file) {
+        let path = req.file.destination + '/' + req.file.filename;
+        avatar = path.substr(1, path.length)
+    }
+    console.log("avta", avatar)
+    const profile = await AuthService.changeAvatar(req.user._id, req.body.content, avatar);
 
-        res.status(200).json({
-            success: true,
-            messages: ['change_avatar_success'],
-            content: profile
-        });
+    res.status(200).json({
+        success: true,
+        messages: ['change_avatar_success'],
+        content: profile
+    });
     // } catch (error) {
 
     //     res.status(400).json({

@@ -116,6 +116,7 @@ function Header(props) {
                   TransitionProps={{ timeout: 300 }}
                   title={`Log out`}
                   arrow
+                  onClick={props.logout}
                 >
                   <ExitToAppIcon />
                 </Tooltip>
@@ -140,6 +141,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   getInforUser: AuthActions.getInforUser,
+  logout: AuthActions.logout,
   searchUser: SearchActions.searchUser,
   getNotifications: NotificationActions.getNotifications,
   getProfileById: AuthActions.getProfileById,

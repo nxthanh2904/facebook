@@ -22,6 +22,10 @@ export const AuthService = {
     answerAuthQuestion,
     checkExistsPassword2,
     getInforUser,
+    changeAvatar,
+    getProfileById,
+    unfriend,
+    addFriend
 };
 
 async function login(data) {
@@ -38,10 +42,11 @@ async function register(data) {
         url: `${process.env.REACT_APP_SERVER}/auth/register`,
         method: 'POST',
         data
-    }, false, false, 'auth')
+    }, true, true, 'auth')
 }
 
 function logout() {
+    console.log('logout');
     return sendRequest({
         url: `${process.env.REACT_APP_SERVER}/auth/logout`,
         method: 'GET',
@@ -162,4 +167,35 @@ function getInforUser() {
         url: `${process.env.REACT_APP_SERVER}/auth/get-user`,
         method: 'GET',
     }, false, false, 'auth');
+}
+
+function getProfileById(id) {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/auth/get-profile/${id}`,
+        method: 'GET',
+    }, false, false, 'auth');
+}
+
+function addFriend(id) {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/friend/add-friend`,
+        method: 'POST',
+        data: { id: id }
+    }, true, true, 'auth');
+}
+
+function unfriend(id) {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/friend/unfriend`,
+        method: 'POST',
+        data: { id: id }
+    }, true, true, 'auth');
+}
+
+function changeAvatar(data) {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/auth/profile/change-avatar`,
+        method: 'PATCH',
+        data,
+    }, true, true, 'auth');
 }

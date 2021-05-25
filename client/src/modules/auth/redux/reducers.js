@@ -9,6 +9,7 @@ export const CallApiStatus = {
 var initState = {
     calledAPI: CallApiStatus.INITIALIZED,
     user: {},
+    otherUser: {},
     links: [],
     components: [],
     error: null,
@@ -30,6 +31,7 @@ export function auth(state = initState, action) {
                 calledAPI: CallApiStatus.CALLING,
             };
         case AuthConstants.LOGIN_REQUEST:
+        case AuthConstants.GET_USER_BY_ID_REQUEST:
         case AuthConstants.FORGOT_PASSWORD_REQUEST:
         case AuthConstants.RESET_PASSWORD_REQUEST:
         case AuthConstants.EDIT_PROFILE_REQUEST:
@@ -39,6 +41,9 @@ export function auth(state = initState, action) {
         case AuthConstants.ANSWER_AUTH_QUESTIONS_REQUEST:
         case AuthConstants.CHECK_PASSWORD2_EXITS_REQUEST:
         case AuthConstants.GET_INFOR_USER_REQUEST:
+        case AuthConstants.CHANGE_AVATAR_REQUEST:
+        case AuthConstants.ADD_FRIEND_REQUEST:
+        case AuthConstants.UN_FRIEND_REQUEST:
             return {
                 ...state,
                 isLoading: true,
@@ -61,21 +66,21 @@ export function auth(state = initState, action) {
                 isLoading: false,
                 error: null
             };
-        
+
         case AuthConstants.CHECK_PASSWORD2_EXITS_SUCCESS:
             return {
                 ...state,
                 password2AlreadyExists: false,
                 error: null
             };
-        
+
         case AuthConstants.CHECK_PASSWORD2_EXITS_FAILE:
             return {
                 ...state,
                 password2AlreadyExists: true,
                 error: action.payload
             }
-        
+
         case AuthConstants.LOGIN_FAILE:
             return {
                 ...state,
@@ -94,7 +99,16 @@ export function auth(state = initState, action) {
             return {
                 ...state,
                 isLoading: false,
-                user: action.payload
+                user: action.payload,
+                otherUser: action.payload.friend
+            };
+        case AuthConstants.ADD_FRIEND_SUCCESS:
+        case AuthConstants.UN_FRIEND_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                user: action.payload.user,
+                otherUser: action.payload.friend
             };
 
         case AuthConstants.CHANGE_USER_INFORMATION_SUCCESS:
@@ -128,7 +142,20 @@ export function auth(state = initState, action) {
                 ...state,
                 isLoading: false,
                 user: action.payload,
-              //  calledAPI: CallApiStatus.FINISHED,
+                //  calledAPI: CallApiStatus.FINISHED,
+            };
+        case AuthConstants.GET_USER_BY_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                otherUser: action.payload,
+            };
+        case AuthConstants.CHANGE_AVATAR_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                user: action.payload.user,
+                calledAPI: CallApiStatus.FINISHED,
             };
 
         case AuthConstants.GET_COMPONENTS_OF_USER_IN_LINK_SUCCESS:
@@ -153,22 +180,23 @@ export function auth(state = initState, action) {
             };
 
         case AuthConstants.GET_LINKS_OF_ROLE_FAILE:
-            return {
-                ...state,
-                isLoading: false,
-                calledAPI: CallApiStatus.FINISHED,
-            };
-
         case AuthConstants.REFRESH_DATA_USER_FAILE:
         case AuthConstants.GET_COMPONENTS_OF_USER_IN_LINK_FAILE:
         case AuthConstants.CHANGE_USER_INFORMATION_FAILE:
         case AuthConstants.CHANGE_USER_PASSWORD_FAILE:
         case AuthConstants.ANSWER_AUTH_QUESTIONS_FAILE:
         case AuthConstants.GET_INFOR_USER_FAILE:
+        case AuthConstants.GET_USER_BY_ID_FAILE:
+        case AuthConstants.CHANGE_AVATAR_FAILE:
+        case AuthConstants.ADD_FRIEND_FAILE:
+        case AuthConstants.UN_FRIEND_FAILE:
             return {
                 ...state,
                 isLoading: false,
+                calledAPI: CallApiStatus.FINISHED,
             };
+
+
 
         case AuthConstants.DOWNLOAD_FILE_REQUEST:
             return {

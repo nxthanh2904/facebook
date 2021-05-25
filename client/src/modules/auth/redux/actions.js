@@ -20,6 +20,10 @@ export const AuthActions = {
     checkExistsPassword2,
     register,
     getInforUser,
+    changeAvatar,
+    getProfileById,
+    addFriend,
+    unFriend,
 }
 
 function login(user) {
@@ -28,7 +32,6 @@ function login(user) {
         dispatch({ type: AuthConstants.LOGIN_REQUEST });
         AuthService.login(user)
             .then(res => {
-                console.log("quang", res.data);
                 setStorage('jwt', res.data?.content?.payload?.token);
                 setStorage('userId', res.data?.content?.payload?.id);
 
@@ -60,7 +63,6 @@ function logout() {
     }
 }
 function register(data) {
-    console.log('iiiiiiiiiiiiii');
     return dispatch => {
         dispatch({ type: AuthConstants.REGISTER_REQUEST });
         AuthService.register(data)
@@ -293,18 +295,84 @@ function checkExistsPassword2() {
 
     }
 }
-function getInforUser(){
+
+function getInforUser() {
     return dispatch => {
-        dispatch({type: AuthConstants.GET_INFOR_USER_REQUEST});
+        dispatch({ type: AuthConstants.GET_INFOR_USER_REQUEST });
         AuthService.getInforUser()
-            .then(res=>{
+            .then(res => {
                 dispatch({
                     type: AuthConstants.GET_INFOR_USER_SUCCESS,
                     payload: res.data.content
                 });
             })
-            .catch(err=>{
-                dispatch({type:AuthConstants.GET_INFOR_USER_FAILE})
+            .catch(err => {
+                dispatch({ type: AuthConstants.GET_INFOR_USER_FAILE })
+            })
+    }
+}
+
+function getProfileById(id) {
+    console.log('getProfileById', id);
+    return dispatch => {
+        dispatch({ type: AuthConstants.GET_USER_BY_ID_REQUEST });
+        AuthService.getProfileById(id)
+            .then(res => {
+                dispatch({
+                    type: AuthConstants.GET_USER_BY_ID_SUCCESS,
+                    payload: res.data.content
+                });
+            })
+            .catch(err => {
+                dispatch({ type: AuthConstants.GET_USER_BY_ID_FAILE })
+            })
+    }
+}
+
+function addFriend(id) {
+    return dispatch => {
+        dispatch({ type: AuthConstants.ADD_FRIEND_REQUEST });
+        AuthService.addFriend(id)
+            .then(res => {
+                dispatch({
+                    type: AuthConstants.ADD_FRIEND_SUCCESS,
+                    payload: res.data.content
+                });
+            })
+            .catch(err => {
+                dispatch({ type: AuthConstants.ADD_FRIEND_FAILE })
+            })
+    }
+}
+
+function unFriend(id) {
+    return dispatch => {
+        dispatch({ type: AuthConstants.UN_FRIEND_REQUEST });
+        AuthService.unfriend(id)
+            .then(res => {
+                dispatch({
+                    type: AuthConstants.UN_FRIEND_SUCCESS,
+                    payload: res.data.content
+                });
+            })
+            .catch(err => {
+                dispatch({ type: AuthConstants.UN_FRIEND_FAILE })
+            })
+    }
+}
+
+function changeAvatar(data) {
+    return dispatch => {
+        dispatch({ type: AuthConstants.CHANGE_AVATAR_REQUEST });
+        AuthService.changeAvatar(data)
+            .then(res => {
+                dispatch({
+                    type: AuthConstants.CHANGE_AVATAR_SUCCESS,
+                    payload: res.data.content
+                });
+            })
+            .catch(err => {
+                dispatch({ type: AuthConstants.CHANGE_AVATAR_FAILE })
             })
     }
 }

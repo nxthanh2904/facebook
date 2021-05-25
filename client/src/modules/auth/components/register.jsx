@@ -19,6 +19,7 @@ function Register(props) {
         e.preventDefault();
         let { email, password, firstName, surName, birthday, gender } = state;
         props.register({ email, password, firstName, surName, birthday, gender });
+        window.$(`#register-modal`).modal("hide");
     }
 
 
@@ -53,7 +54,7 @@ function Register(props) {
                 </div>
                 <div className="form-inline">
                     <input type="text" className="form-control" placeholder="Số di động hoặc email" onChange={(e) => { setState({ ...state, email: e.target.value }) }} />
-                    <input type="text" className="form-control" placeholder="Mật khẩu mới" onChange={(e) => { setState({ ...state, password: e.target.value }) }} />
+                    <input type="text" className="form-control" placeholder="Mật khẩu" onChange={(e) => { setState({ ...state, password: e.target.value }) }} />
                 </div>
                 {/* <div className="form-inline">
                     <input type="text" className="form-control" placeholder="Mật khẩu mới" />
@@ -76,7 +77,7 @@ function Register(props) {
                             { value: 1, text: "Nữ" },
                             { value: 2, text: "Khác" },
                         ]}
-                        onChange={(value) => { setState({ ...state, gender: value }) }}
+                        onChange={(value) => { setState({ ...state, gender: value[0] }) }}
                     />
                 </div>
                 <p style={{ width: "72%", fontSize: 12, marginLeft: "14%" }}>

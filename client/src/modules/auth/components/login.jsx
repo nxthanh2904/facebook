@@ -53,10 +53,10 @@ const Login = (props) => {
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             <div className="name-app" style={{ color: "#166FE5", fontSize: "60px", fontWeight: "bold" }}>
                                 factbook
-                                </div>
+                            </div>
                             <div className="sologan" style={{ fontSize: "20px" }}>
                                 Factbook giúp bạn kết nối và chia sẻ với mọi người trong cuộc sống của bạn.
-                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="col-xs-6" style={{ height: "80vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -75,7 +75,7 @@ const Login = (props) => {
                             </div>
                             <div className={`form-group ${errorOnPass === undefined ? "" : "has-error"}`}>
                                 <label>Mật khẩu<span className="text-red">*</span></label>
-                                <input type="text" className="form-control"
+                                <input type="password" className="form-control"
                                     onChange={(e) => { setState({ ...state, password: e.target.value }) }}
                                     placeholder={translate('task.task_management.name')}
                                     value={(password)}
@@ -89,8 +89,8 @@ const Login = (props) => {
                             </div>
                             <div style={{ textAlign: "center", color: "#166FE5" }}>
                                 {/* <p style={{ color: "#166FE5" }}> Quên mật khẩu</p> */}
-                                    Quên mật khẩu?
-                                </div>
+                                Quên mật khẩu?
+                            </div>
 
                             <hr style={{ borderBlockColor: "#ccc" }} />
 
@@ -145,8 +145,8 @@ const Login = (props) => {
                     <br />
                     <br />
 
-                        FactBook &#169; 2021
-                    </div>
+                    FactBook &#169; 2021
+                </div>
             </div>
         </div>
     );

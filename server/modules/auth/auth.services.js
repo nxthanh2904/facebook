@@ -150,6 +150,7 @@ exports.login = async (data) => {
             token: token,
             avatar: user.avatar,
             listfriend: user.listfriend,
+            gender: user.gender,
         };
         return {
             payload: payload,
@@ -175,10 +176,11 @@ exports.logout = async (id, token) => {
 
 exports.changeInformation = async (
     id,
-    name,
+    data,
     avatar = undefined
 ) => {
-
+    console.log('dddd', data);
+    const { firstName, surName, birthday, gender } = data;
     let user = await User.findById(id)
 
     let deleteAvatar = "." + user.avatar;
@@ -191,6 +193,13 @@ exports.changeInformation = async (
             fs.unlinkSync(deleteAvatar);
         user.avatar = avatar;
     }
+    // let splitter = birthday.split("-");
+    // let dateISO = new Date(splitter[2], splitter[1] - 1, splitter[0])
+    user.firstName = firstName;
+    user.surName = surName;
+    user.birthday = birthday;
+    user.gender = gender ? gender : user.gender;
+
     await user.save();
 
     return user;
@@ -228,7 +237,9 @@ exports.changeAvatar = async (
 exports.getProfile = async (id) => {
     let user = await User.findById(id)
         .select("-password -active -token")
-
+        .populate([
+            { path: "listfriends", select: "id active firstName surName avatar birthday gender createdAt" },
+        ]);
     if (user === null) throw ["user_not_found"];
 
     return user;

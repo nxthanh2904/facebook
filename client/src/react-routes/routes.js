@@ -17,7 +17,11 @@ import General from "../modules/profile/component/general";
 import Profile from "../modules/profile/component/profile";
 import Listfriend from "../modules/profile/component/friend/Listfriend";
 import Chat from '../modules/messenger/component/chat';
+import Search from '../modules/search/Search';
 import ViewSinglePost from "../modules/posts/post/viewSinglePost";
+import ViewOtherProfile from "../modules/profile/component/viewOtherUserProfile";
+import ViewAlbums from "../modules/profile/component/view-detail/viewAlbums";
+import ViewFriends from "../modules/profile/component/view-detail/viewFriends";
 
 class Routes extends Component {
     render() {
@@ -41,12 +45,27 @@ class Routes extends Component {
                         pageName={"home"}
                         component={Home}
                     />
-                    <PrivateRoute
+                    {/* <PrivateRoute
                         path={"/profile"}
                         pageName={"Profile"}
                         component={Profile}
+                    /> */}
+                    <PrivateRoute
+                        path={"/profile/:id"}
+                        pageName={"Profile"}
+                        // component={Profile}
+                        component={ViewOtherProfile}
                     />
-
+                    <PrivateRoute
+                        path={"/friends/user/:id"}
+                        pageName={"view_friend"}
+                        component={ViewFriends}
+                    />
+                    <PrivateRoute
+                        path={"/albums/user/:id"}
+                        pageName={"view_albums"}
+                        component={ViewAlbums}
+                    />
                     <PrivateRoute
                         path={"/watch"}
                         pageName={"Watch"}
@@ -59,6 +78,14 @@ class Routes extends Component {
                         pageName={"Chat"}
                         component={Chat}
                     />
+
+                    <PrivateRoute
+                        // exact={true}
+                        path={"/search"}
+                        pageName={"Search"}
+                        component={Search}
+                    />
+
                     <PrivateRoute
                         // exact={true}
                         path={"/post/:id"}

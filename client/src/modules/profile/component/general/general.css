@@ -5,6 +5,19 @@
     object-fit: fill
 }
 
+.album-view{
+    margin-bottom: 10px;
+    height: 200px;
+    width: 95%;
+    object-fit: fill;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+}
+.album-view:hover{
+    transform: scale(1.05);
+}
+
+
 .avatar-friend{
     margin: 5px 0px;
     height: 110px;
@@ -13,6 +26,24 @@
     border-radius: 5px;
 }
 
+.avatar-friend-view{
+    margin: 5px 0px;
+    height: 300px;
+    width: 95%;
+    object-fit: fill;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+}
+.avatar-friend-view:hover {
+    /* transform: scale(1.05); */
+}
+
 .bold{
     font-weight: 700;
+}
+
+.video-player {
+    width: 35vw !important;
+    height: 360px !important;
+    margin-bottom: 20px;
 }

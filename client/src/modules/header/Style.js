@@ -132,4 +132,12 @@ export default makeStyles((theme) => ({
       },
     },
   },
+  input_search: {
+    borderRadius: 25,
+    borderWidth: 0,
+    marginLeft: 10,
+    padding: 10,
+    width: 250,
+    backgroundColor: "#eee"
+  }
 }));
