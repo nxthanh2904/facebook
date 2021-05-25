@@ -39,7 +39,6 @@ async function getPostById(id) {
 }
 
 async function setComment(formData, postId) {
-    console.log('hello', formData);
     return sendRequest({
         url: `${process.env.REACT_APP_SERVER}/post/set-comment/${postId}`,
         method: 'POST',

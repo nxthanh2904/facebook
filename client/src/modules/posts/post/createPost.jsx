@@ -37,7 +37,6 @@ function CreatePost(props) {
                     urlFile: value[value.length - 1].urlFile,
                     fileUpload: value[value.length - 1].fileUpload
                 }
-                console.log('aaaaaaaaaaaaaaaaaaaaaa', newImage);
                 setState({
                     ...state,
                     images: [...state.images, newImage]
@@ -52,14 +51,12 @@ function CreatePost(props) {
         const formData = new FormData();
         const { content, images, feeling } = state
         if (content) {
-            console.log('imageesss', content);
             formData.append('content', content);
         }
         if (images && images.length) {
 
             images.forEach(x => {
 
-                console.log('imageesss', x.fileUpload);
                 formData.append("post", x.fileUpload);
             })
         }

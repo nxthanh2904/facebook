@@ -2,10 +2,8 @@ const AuthService = require('./auth.services');
 
 exports.register = async (req, res) => {
     try {
-        console.log("show my body ", req.body);
 
         const User = await AuthService.register(req.body);
-        console.log(User);
         if (User.success) {
             res.status(200).json({
                 success: true,
@@ -48,7 +46,6 @@ exports.getVerifyCode = async (req, res) => {
 exports.checkVerifyCode = async (req, res) => {
     try {
         const User = await AuthService.checkVerifyCode(req.body);
-        console.log(User);
         if (User.success) {
             res.status(200).json({
                 success: true,
@@ -74,7 +71,6 @@ exports.checkVerifyCode = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const User = await AuthService.login(req.body);
-        console.log(User);
         if (User.success) {
             res.status(200).json({
                 success: true,
@@ -122,7 +118,6 @@ exports.changeInformation = async (req, res) => {
             console.log("path", path)
             avatar = path.substr(1, path.length)
         }
-        console.log("re", req.body)
         const profile = await AuthService.changeInformation(req.user._id, req.body.name, avatar);
 
         res.status(200).json({

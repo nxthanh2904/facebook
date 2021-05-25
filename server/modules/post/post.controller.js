@@ -139,7 +139,6 @@ exports.setComment = async (req, res) => {
     try {
 
         let files = [];
-         console.log("fieleeeeee", req.files);
         if (req.files !== undefined) {
            
             req.files.forEach((elem) => {

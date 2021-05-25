@@ -9,14 +9,12 @@ const ViewSinglePost = (props) => {
 
   const { postItem } = useSelector(state => state.post);
   const idParam = props.location?.pathname?.split("/").reverse()[0];
-  console.log('posItd', idParam);
   const [postId, setPostId] = useState(idParam);
 
   useEffect(() => {
     props.getPostById(postId)
   }, [postId])
 
-  console.log('render', window.location.href, props.location);
   return (
     <LayoutWithHeader>
       <div className="container">

@@ -79,7 +79,6 @@ const Comment = (props) => {
     }
     formData.append('creator', userId);
     let data = { formData: formData, id: postId };
-    console.log("send cmt", data, state);
     props.setComment(formData, postId);
     props.getPostById(postId)
     setState({

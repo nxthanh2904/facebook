@@ -46,8 +46,6 @@ export function post(state = initState, action) {
                 postItem: action.payload
             }
         case PostConstants.SET_COMMENT_SUCCESS:
-            // let x = state.posts.filter(e => (String(e._id) === String(action.payload._id)) ? action.payload : e)
-            // console.log('action.payload', action.payload, action.payload._id, x);
             return {
                 ...state,
                 isLoading: false,
