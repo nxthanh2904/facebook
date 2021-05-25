@@ -47,19 +47,6 @@ const PostSearched = (props) => {
     }
     return (
         <div>
-            {/* <div className={classes.post__header}>
-        <Avatar
-          style={{ marginLeft: "10px" }}
-          src={`${process.env.REACT_APP_SERVER}${user.avatar}`}
-        />
-        <div className={classes.header__info}>
-          <h4 style={{ cursor: "pointer" }}>{user.surName} {user.firstName}</h4>
-          <p style={{ cursor: "pointer" }} onClick={(e) => clickViewPost(e, newFeed._id)}>
-            {moment(newFeed.createdAt).fromNow()}
-          </p>
-        </div>
-        <MoreHorizOutlinedIcon />
-      </div> */}
             <div >
                 <div className={classes.body__description} style={{ cursor: "pointer" }}>
                     <p style={{ color: "#333" }}>{newFeed.content}</p>
@@ -77,33 +64,9 @@ const PostSearched = (props) => {
             <div className={classes.post__footer}>
                 <div>
                     <Reactions newFeed={newFeed} />
-                    {/* {comment?.length ? <div style={{ cursor: "pointer" }}>
-                        {comment?.length}&nbsp;comment
-          </div> : <div></div>
-                    } */}
                 </div>
 
-                {/* <div className={classes.footer__actions} >
-          <div onClick={onClickLikePost} className={classes.action__icons} style={{ color: likedPost && "#2e81f4" }}>
-            <ThumbUpAltOutlinedIcon />
-            <h4>Like</h4>
-          </div>
-          <div onClick={collapseComment} className={classes.action__icons}>
-            <ChatBubbleOutlineOutlinedIcon />
-            <h4>Comment</h4>
-          </div>
-          <div className={classes.action__icons}>
-            <ReplyOutlinedIcon style={{ transform: "scaleX(-1)" }} />
-            <h4>Share</h4>
-          </div>
-        </div> */}
             </div>
-            {/* {
-        showComment && <Comment postId={newFeed?._id} listComment={comment} />
-      }
-      {onViewPost &&
-        <ModalViewPost viewType={"single"} id={newFeed?._id} postItem={newFeed} />
-      } */}
         </div>
     )
 }
