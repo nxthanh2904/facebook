@@ -48,16 +48,16 @@ const Chat = (props) => {
 
   }, [conversations.length]);
 
-    useEffect(() => {
-      socket.on('message', (data) => {
-          setMessages(messages => [...messages, { content: data.text, creator: data.creator }]);
-          props.receiveMessage({ content: data.text, creator: data.creator }, data.roomId)
-        });
-      
-       socket.on("roomData", (data) => {
-      });
-      
-    },[conversations.length]);
+  useEffect(() => {
+    socket.on('message', (data) => {
+      setMessages(messages => [...messages, { content: data.text, creator: data.creator }]);
+      props.receiveMessage({ content: data.text, creator: data.creator }, data.roomId)
+    });
+
+    socket.on("roomData", (data) => {
+    });
+
+  }, [conversations.length]);
   // ham gửi tin nhắn
   const sendMessage = (event) => {
     event.preventDefault();
@@ -81,8 +81,10 @@ const Chat = (props) => {
   return (
 
     <LayoutOnlyHeader>
+      {/* <Header /> */}
       <div className="outerContainer">
-        <div className="col-md-3" style={{ minWidth: "365px", padding: 0, backgroundColor: "#223457" }}>
+        <div className="col-md-3" style={{ minWidth: "365px", padding: 0, backgroundColor: "#fff" }}>
+          {/* <div className="col-md-3" style={{ backgroundColor: "#3F4143" #223457}}> */}
           <TextContainer users={conversations} setCurrentConversation={joinConversation} />
         </div>
 

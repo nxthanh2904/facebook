@@ -21,7 +21,10 @@ const InfoBar = (props) => {
         <img className="onlineIcon" src={onlineIcon} alt="online icon" />
       </div>
       <div className="rightInnerContainer">
-        <Link to="/"><img src={closeIcon} alt="close icon" /></Link>
+        <Link to="/">
+          <strong>X</strong>
+          {/* <img src={closeIcon} alt="close icon" /> */}
+        </Link>
       </div>
     </div>
   )
