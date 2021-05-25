@@ -50,7 +50,7 @@ export function post(state = initState, action) {
                 isLoading: false,
                 postItem: action.payload
             }
-  
+        case PostConstants.SET_COMMENT_SUCCESS:
         case PostConstants.EDIT_POST_SUCCESS:
             console.log('rrrrrrrrr', action.payload);
             const index = state.posts.findIndex(elem => elem._id === action.payload.content._id);

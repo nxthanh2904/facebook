@@ -9,7 +9,6 @@ import Styles from "./Style";
 import { DialogModal, UploadFile } from "../../../common-components";
 import { PostActions } from '../redux/actions';
 import { AuthActions } from '../../auth/redux/actions';
-import Picker from 'emoji-picker-react';
 import Feeling from './feelingModal';
 import ReactEmoji from 'react-emoji';
 function CreatePost(props) {
@@ -40,7 +39,6 @@ function CreatePost(props) {
                     urlFile: value[value.length - 1].urlFile,
                     fileUpload: value[value.length - 1].fileUpload
                 }
-                console.log('aaaaaaaaaaaaaaaaaaaaaa', newImage);
                 setState({
                     ...state,
                     images: [...state.images, newImage]
@@ -66,14 +64,12 @@ function CreatePost(props) {
         const formData = new FormData();
         const { content, images } = state
         if (content) {
-            console.log('imageesss', content);
             formData.append('content', content);
         }
         if (images && images.length) {
 
             images.forEach(x => {
 
-                console.log('imageesss', x.fileUpload);
                 formData.append("post", x.fileUpload);
             })
         }

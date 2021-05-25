@@ -19,7 +19,6 @@ const auth = async (req, res, next) => {
         req.token = token;
         next();
     } catch (error) {
-        console.log('eeeeeeeeeeee');
         res.status(400).json({
             success: false,
             message: "Invalid token!!",

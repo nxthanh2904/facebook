@@ -14,7 +14,6 @@ const serverSocket =  (io) => {
 
         // nhận tin nhắn từ client
         socket.on('sendMessage',async (data, callback) => {
-            console.log('sendd', data, socket.id);
             const con = await ChatServices.saveMessage(data);
             io.to(data.roomId).emit('message', {creator: data.creator, text: data.message, roomId: data.roomId });
             callback();        
