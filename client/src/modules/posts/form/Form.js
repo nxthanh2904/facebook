@@ -81,7 +81,7 @@ const Form = (props) => {
   return (
     <Paper className={classes.upload}>
       <div className={classes.upload__header}>
-        <Avatar 
+        <Avatar
           src={`${process.env.REACT_APP_SERVER}${user.avatar}`}
         />
         <form className={classes.header__form} onSubmit={handleSubmitButton}>
@@ -136,11 +136,11 @@ const Form = (props) => {
   );
 };
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
   return state;
 }
 
-const mapDispatchToProps ={
- // getInforUser: AuthActions.getInforUser
+const mapDispatchToProps = {
+  // getInforUser: AuthActions.getInforUser
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslate(Form));

@@ -20,6 +20,8 @@ export function post(state = initState, action) {
         case PostConstants.LIKE_POST_REQUEST:
         case PostConstants.DISLIKE_POST_REQUEST:
         case PostConstants.GET_POST_BY_ID_REQUEST:
+        case PostConstants.EDIT_POST_FAILE:
+        case PostConstants.DELETE_POST_REQUEST:
             return {
                 ...state,
                 isLoading: false,
@@ -34,6 +36,9 @@ export function post(state = initState, action) {
                 posts: [action.payload, ...state.posts]
             }
         case PostConstants.GET_NEW_FEED_SUCCESS:
+        case PostConstants.SET_COMMENT_SUCCESS:
+        case PostConstants.LIKE_POST_SUCCESS:
+        case PostConstants.DISLIKE_POST_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
@@ -45,33 +50,29 @@ export function post(state = initState, action) {
                 isLoading: false,
                 postItem: action.payload
             }
-        case PostConstants.SET_COMMENT_SUCCESS:
-            // let x = state.posts.filter(e => (String(e._id) === String(action.payload._id)) ? action.payload : e)
-            // console.log('action.payload', action.payload, action.payload._id, x);
+  
+        case PostConstants.EDIT_POST_SUCCESS:
+            console.log('rrrrrrrrr', action.payload);
+            const index = state.posts.findIndex(elem => elem._id === action.payload.content._id);
+            state.posts[index] = action.payload.content;
             return {
                 ...state,
                 isLoading: false,
-                posts: action.payload
             }
-        case PostConstants.LIKE_POST_SUCCESS:
+        case PostConstants.DELETE_POST_SUCCESS:
+            const posts = state.posts.filter(elem => elem._id !== action.postId);
             return {
                 ...state,
-                isLoading: false,
-                posts: action.payload
+                posts: posts,
+                isLoading: false
             }
-        case PostConstants.DISLIKE_POST_SUCCESS:
-            return {
-                ...state,
-                isLoading: false,
-                posts: action.payload
-            }
-
         case PostConstants.CREATE_POST_FAILE:
         case PostConstants.GET_NEW_FEED_FAILE:
         case PostConstants.SET_COMMENT_FAILE:
         case PostConstants.LIKE_POST_FAILE:
         case PostConstants.DISLIKE_POST_FAILE:
         case PostConstants.GET_POST_BY_ID_FAILE:
+        case PostConstants.DELETE_POST_FAILE:
             return {
                 ...state,
                 isLoading: false,
