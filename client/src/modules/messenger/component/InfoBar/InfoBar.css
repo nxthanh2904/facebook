@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #3964b9;
+  background: #fff;
   border-radius: 4px 4px 0 0;
   height: 60px;
   width: 100%;
+  box-shadow: 0px 5px 5px 0px #ccc;
 }
 
 .leftInnerContainer {
@@ -13,7 +14,7 @@
   display: flex;
   align-items: center;
   margin-left: 5%;
-  color: white;
+  color: #222;
 }
 
 .rightInnerContainer {
@@ -28,6 +29,6 @@
 }
 
 .avt-chat img {
-  border: 2px solid #fff;
+  border: 2px solid #ccc;
   border-radius: 50%;
 }

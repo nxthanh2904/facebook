@@ -9,6 +9,8 @@ export const PostActions = {
     likePost,
     dislikePost,
     getPostById,
+    editPost,
+    deletePost,
 }
 
 function createPost(data) {
@@ -119,5 +121,41 @@ function dislikePost(postId) {
     }
 }
 
+function editPost(data, postId) {
+    return dispatch => {
+        dispatch({
+            type: PostConstants.EDIT_POST_REQUEST
+        });
+        PostServices.editPost(data, postId)
+            .then(res => {
+                dispatch({
+                    type: PostConstants.EDIT_POST_SUCCESS,
+                    payload: res.data
+                })
+            })
+            .catch((err) => {
+                dispatch({
+                    type: PostConstants.EDIT_POST_FAILE})
+            })
+    }
+}
+
+function deletePost(postId) {
+    return dispatch => {
+        dispatch({ type: PostConstants.DELETE_POST_REQUEST });
+        PostServices.deletePost(postId)
+            .then(res => {
+                dispatch({
+                    type: PostConstants.DELETE_POST_SUCCESS,
+                    payload: res.data,
+                    postId: postId
+                })
+            })
+            .catch((err) => {
+                dispatch({
+                    type: PostConstants.DELETE_POST_FAILE})
+            })
+    }
+}
 
 

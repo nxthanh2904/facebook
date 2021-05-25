@@ -8,21 +8,23 @@ import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined"
 import Styles from "./Style";
 import { DialogModal, UploadFile } from "../../../common-components";
 import { PostActions } from '../redux/actions';
-import { StarRateOutlined } from '@material-ui/icons';
 import { AuthActions } from '../../auth/redux/actions';
-
-
+import Feeling from './feelingModal';
+import ReactEmoji from 'react-emoji';
 function CreatePost(props) {
     const classes = Styles();
     const { user } = props.auth;
+    const [ feeling, setFeeling]  = useState(null);
     const [state, setState] = useState({
         content: "",
-        feeling: "",
         activity: "",
         images: [],
         videos: [],
 
     });
+    useEffect(() => {
+        console.log('feelinggggg', feeling);
+    }, [feeling]);
 
     const onChangeText = (e) => {
         setState({ ...state, content: e.target.value });
@@ -46,10 +48,21 @@ function CreatePost(props) {
 
     }
 
+    const onChangeFeeling = (value) => {
+        console.log('emoji create', value);
+        setFeeling(value);
+    }
+
+    const toggleFeeling = (e) => {
+        e.preventDefault();
+        window.$("#modal-create-post-feeling").modal('show');
+    }
+    
+
 
     const save = () => {
         const formData = new FormData();
-        const { content, images, feeling } = state
+        const { content, images } = state
         if (content) {
             formData.append('content', content);
         }
@@ -82,6 +95,7 @@ function CreatePost(props) {
             hasCloseButton={false}
             disableSubmit={!isValidateForm()}
         >
+            <Feeling onChangeFeeling={ onChangeFeeling}/>
             <div className={classes.post}>
                 <div className={classes.post__header}>
                     <Avatar
@@ -89,7 +103,14 @@ function CreatePost(props) {
                     />
                     <div className={classes.header__info}>
                         <h4>{user.surName} {user.firstName}</h4>
+                        {feeling ? (
+                        <div >
+                            đang đang {ReactEmoji.emojify(feeling.code)} cảm thấy <strong>{feeling.name}</strong>
+                        </div>
+                    ) : <> </>
+                    }
                     </div>
+                    
                 </div>
                 <textarea type="text"
                     className={classes.input_text}
@@ -100,21 +121,19 @@ function CreatePost(props) {
                     <strong style={{ display: "inline", marginRight: 10 }}>Thêm vào bài viết</strong>
                     <VideocamRoundedIcon style={{ color: "red", marginRight: 10 }} />
                     <PhotoRoundedIcon style={{ color: "green", marginRight: 10 }} />
-                    <EmojiEmotionsOutlinedIcon style={{ color: "orange", marginRight: 10 }} />
+                    <EmojiEmotionsOutlinedIcon onClick={toggleFeeling} style={{ color: "orange", marginRight: 10 }} />
 
                     <UploadFile
                         accept="image/*,audio/*,video/*"
                         multiple={true}
                         // show={false}
                         onChange={handleUploadFile} />
+                    {/* <Picker onEmojiClick={onEmojiClick} groupVisibility={{smileys_people: false, }} pickerStyle={{ width: '100%' }} /> */}
                 </div>
             </div>
 
         </DialogModal>
     )
-
-
-
 
 }
 

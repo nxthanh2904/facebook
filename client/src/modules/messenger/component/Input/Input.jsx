@@ -9,12 +9,12 @@ const Input = ({ setMessage, sendMessage, message }) => (
       type="text"
       placeholder="Type a message..."
       value={message}
-      rows='3'
+      rows='2'
       onChange={({ target: { value } }) => setMessage(value)}
       onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
     />
-    <button className="sendButton" onClick={e => sendMessage(e)}>
-      <SendIcon style={{ width: "100px", height: "30px" }} />
+    <button style={{ width: "7%" }} className="btn btn-link" onClick={e => sendMessage(e)}>
+      <SendIcon style={{ width: "80px", height: "30px" }} />
     </button>
   </form>
 )

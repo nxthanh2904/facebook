@@ -53,6 +53,22 @@ export default makeStyles((theme) => ({
       fontSize: 12,
     },
   },
+  header__feeling: {
+    //flex: 1,
+   // display: "flex",
+    flexDirection: "row",
+    //justifyContent: "center",
+    marginLeft: 10,
+    "& > h4": {
+      fontSize: 16,
+      fontWeight: 600,
+      marginBottom: 3,
+    },
+    "& > p": {
+      color: "grey",
+      fontSize: 12,
+    },
+  },
   post__body: {
     width: "100%",
     display: "flex",

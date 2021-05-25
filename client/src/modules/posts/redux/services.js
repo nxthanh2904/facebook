@@ -12,6 +12,8 @@ export const PostServices = {
     likePost,
     dislikePost,
     getPostById,
+    editPost,
+    deletePost,
 }
 
 async function createPost(data) {
@@ -43,19 +45,34 @@ async function setComment(formData, postId) {
         url: `${process.env.REACT_APP_SERVER}/post/set-comment/${postId}`,
         method: 'POST',
         data: formData
-    }, true, true, 'post')
+    }, false, false, 'post')
 }
 
 async function likePost(postId) {
     return sendRequest({
         url: `${process.env.REACT_APP_SERVER}/post/like-post/${postId}`,
         method: 'POST',
-    }, true, true, 'post')
+    }, false, false, 'post')
 }
 
 async function dislikePost(postId) {
     return sendRequest({
         url: `${process.env.REACT_APP_SERVER}/post/dislike-post/${postId}`,
         method: 'POST',
+    }, false, false, 'post')
+}
+
+async function editPost(data, postId) {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/post/edit-post/${postId}`,
+        method: 'PATCH',
+        data
+    }, true, true, 'post')
+}
+
+async function deletePost(postId) {
+    return sendRequest({
+        url: `${process.env.REACT_APP_SERVER}/post/delete-post/${postId}`,
+        method: 'DELETE',
     }, true, true, 'post')
 }
