@@ -64,7 +64,6 @@ const Chat = (props) => {
   const sendMessage = (event) => {
     event.preventDefault();
     if (message) {
-      console.log('message', message);
       let data = {
         creator: user,
         roomId: currentConversation._id,
