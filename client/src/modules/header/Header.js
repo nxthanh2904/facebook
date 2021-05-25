@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Hidden, Avatar, Tooltip, Paper, Badge } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { HomeOutlined } from "@material-ui/icons";
-import { PlayCircleFilledWhiteOutlined } from "@material-ui/icons";
-import { StoreMallDirectoryOutlined } from "@material-ui/icons";
-import { SupervisedUserCircleOutlined } from "@material-ui/icons";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { HomeOutlined, PlayCircleFilledWhiteOutlined, StoreMallDirectoryOutlined, SupervisedUserCircleOutlined } from "@material-ui/icons";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
@@ -16,11 +14,13 @@ import Chat from "@material-ui/icons/Chat";
 import Zoom from "@material-ui/core/Zoom";
 import logo from "../../assets/images/logo.png";
 import Style from "./Style";
-//import Notifications from "../notifications/components/notification";
+import Notifications from "../notifications/components/notification";
 import { AuthActions } from "../auth/redux/actions"
 import { connect } from 'react-redux';
 import { withTranslate } from 'react-redux-multilingual';
-//import { NotificationActions } from "../notifications/redux/actions";
+import { NotificationActions } from "../notifications/redux/actions";
+import SearchBox from "./SearchBox";
+import { SearchActions } from "./redux/actions";
 
 
 function Header(props) {
@@ -29,8 +29,9 @@ function Header(props) {
   const mode = useSelector((state) => state.util);
 
   useEffect(() => {
+    props.searchUser({ type: "all" });
     props.getInforUser();
-   // props.getNotifications();
+    props.getNotifications();
   }, [])
 
   const { user } = props.auth
@@ -45,10 +46,11 @@ function Header(props) {
               <img className={classes.logo__image} src={logo} alt="facebook-logo" />
             </Link>
             <Hidden smDown>
-              <div className={classes.logo__search}>
-                <SearchIcon />
-                <input placeholder="Search facebook ..." />
-              </div>
+              {/* <div className={classes.logo__search}> */}
+              {/* <SearchIcon /> */}
+              {/* <input placeholder="Search facebook ..." /> */}
+              <SearchBox />
+              {/* </div> */}
             </Hidden>
           </Grid>
         </Hidden>
@@ -57,12 +59,15 @@ function Header(props) {
           <div className={`${classes.nav__links} ${classes.nav__links__specail}`}>
             <Avatar src={logo} />
           </div>
-          <div className={classes.nav__links}>
+
+          <Link to="/" className={classes.nav__links}>
             <HomeOutlined />
-          </div>
-          <div className={classes.nav__links}>
+          </Link>
+
+          <Link to="/watch" className={classes.nav__links}>
             <PlayCircleFilledWhiteOutlined />
-          </div>
+          </Link>
+
           <Hidden xsDown>
             <div className={classes.nav__links}>
               <StoreMallDirectoryOutlined />
@@ -71,10 +76,8 @@ function Header(props) {
               <SupervisedUserCircleOutlined />
             </div>
           </Hidden>
-          {/* <div className={classes.nav__links} onClick={changeTheme}>
-            {mode ? <Brightness4Icon /> : <BrightnessHighIcon />}
-          </div> */}
-          <Link to={"/profile"} className={`${classes.nav__links} ${classes.nav__links__specail}`}>
+
+          <Link to={`/profile/${user._id}`} onClick={() => props.getProfileById(user?._id)} className={`${classes.nav__links} ${classes.nav__links__specail}`}>
             <Avatar
               src={avatar}
             />
@@ -83,20 +86,20 @@ function Header(props) {
         {/*----Userinfo and options--------*/}
         <Hidden xsDown>
           <Grid item className={classes.header__userinfo} sm={2} md={3}>
-            {/* <Tooltip
+            <Tooltip
               placement="left"
               TransitionComponent={Zoom}
               TransitionProps={{ timeout: 300 }}
-              title={"logout"}
+              title={`${user.firstName}`}
               arrow
-            > */}
-            <Link to={"/profile"} >
-              <Avatar
-                src={avatar}
-              />
-            </Link>
+            >
+              <Link to={`/profile/${user._id}`} onClick={() => props.getProfileById(user?._id)}>
+                <Avatar
+                  src={avatar}
+                />
+              </Link>
 
-            {/* </Tooltip> */}
+            </Tooltip>
 
             <Hidden smDown>
               <div className={classes.userinfo__options}>
@@ -105,8 +108,17 @@ function Header(props) {
                   <Chat />
                 </Link>
                 {/* <Badge badgeContent={10} max={9} {...defaultProps} /> */}
-                {/* <Notifications /> */}
-                <ArrowDropDownRoundedIcon />
+                <Notifications />
+                {/* <ArrowDropDownRoundedIcon /> */}
+                <Tooltip
+                  placement="left"
+                  TransitionComponent={Zoom}
+                  TransitionProps={{ timeout: 300 }}
+                  title={`Log out`}
+                  arrow
+                >
+                  <ExitToAppIcon />
+                </Tooltip>
               </div>
 
             </Hidden>
@@ -119,7 +131,7 @@ function Header(props) {
 
 const defaultProps = {
   color: "secondary",
-  // children: <NotificationsNoneOutlinedIcon />,
+  children: <NotificationsNoneOutlinedIcon />,
 };
 
 const mapStateToProps = state => {
@@ -128,7 +140,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   getInforUser: AuthActions.getInforUser,
-  //getNotifications: NotificationActions.getNotifications
+  searchUser: SearchActions.searchUser,
+  getNotifications: NotificationActions.getNotifications,
+  getProfileById: AuthActions.getProfileById,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslate(Header));
