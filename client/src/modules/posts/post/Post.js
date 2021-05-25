@@ -159,15 +159,17 @@ const Post = (props) => {
           />
         </Link>
         <div className={classes.header__info}>
-          <h4 style={{ cursor: "pointer" }} onClick={() => props.getProfileById(user?._id)}>
-            <Link to={`/profile/${user?._id}`} >{user.surName} {user.firstName}</Link>
-          </h4>
-           {newFeed.feeling ? (
-                        <div >
-                            đang đang {ReactEmoji.emojify(newFeed.feeling.code)} cảm thấy <strong>{newFeed.feeling.name}</strong>
-                        </div>
-                    ) : <> </>
+          <div style={{ display: 'flex' }}>
+            <h4 style={{ cursor: "pointer" }} onClick={() => props.getProfileById(user?._id)}>
+              <Link to={`/profile/${user?._id}`} >{user.surName} {user.firstName}</Link>
+            </h4>
+            {newFeed.feeling ? (
+              <h4>
+                &nbsp;&nbsp;đang {ReactEmoji.emojify(newFeed.feeling.code)} cảm thấy <strong>{newFeed.feeling.name}</strong>
+              </h4>
+            ) : <> </>
             }
+          </div>
           <p style={{ cursor: "pointer" }} onClick={(e) => clickViewPost(e, newFeed._id)}>
             {/* <ReactTimeago date={newFeed ?newFeed.createAt.toUTCString() : null} units="minute" /> */}
             {moment(newFeed.createdAt).fromNow()}
@@ -205,7 +207,7 @@ const Post = (props) => {
       </div>
       <div className={classes.post__body}>
         <div className={classes.body__description} style={{ cursor: "pointer" }} onClick={(e) => clickViewPost(e, newFeed._id)}>
-          <p>{newFeed.content}</p>
+          <p>{ReactEmoji.emojify(newFeed.content)}</p>
         </div>
         {newFeed.images.length ?
           <div>

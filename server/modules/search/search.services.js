@@ -8,7 +8,7 @@ exports.searchPost = async (keyword) => {
         user: []
     };
     let post = await Post.find({ content: { $regex: keyword } }).populate("creator");
-    let user = await User.find({ $or: [{ surName: { $regex: keyword } }, { firstName: { $regex: keyword } }] })
+    let user = await User.find({ $or: [{ surName: { $regex: keyword, $options: "i" } }, { firstName: { $regex: keyword, $options: "i" } }] })
     // var listPost = []
     // if (post) {
     //     for (let i in post) {
@@ -103,4 +103,42 @@ exports.deleteAllSearch = async (userId) => {
     findSearch.data = [];
     findSearch.save();
     return findSearch;
+};
+
+exports.searchUser = async (data) => {
+    let { type, keyword } = data;
+    let limit = Number(data.limit);
+    let page = Number(data.page);
+
+    let users = [];
+    let totalDoc;
+    let totalPage;
+    if (type === "all") {
+        users = await User.find({});
+        totalDoc = users.length;
+        totalPage = 1
+    }
+    else {
+        let key = {};
+        if (keyword !== "") {
+            key = {
+                ...key,
+                $or: [
+                    { surName: { $regex: keyword, $options: "i" } },
+                    { firstName: { $regex: keyword, $options: "i" } }
+                ]
+            }
+            users = await User.find(key)
+                .sort({ 'createdAt': -1 })
+                .skip(limit * (page - 1)).limit(limit);
+            totalDoc = await User.countDocuments(key);
+            totalPage = Math.ceil(totalDoc / limit);
+        }
+    }
+
+    return {
+        users,
+        totalPage,
+        totalDoc,
+    }
 };

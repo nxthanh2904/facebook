@@ -12,14 +12,19 @@ exports.createPost = async (id, data, files = undefined) => {
             listfile.push(file)
         }
     }
-    if (!(data.content || listfile.length))
-        throw['null']
+    // if (!(data.content || listfile.length))
+    //     throw['null']
+    console.log('aaaaaa', data.feeling);
     let post = await Post.create({
         creator: id,
         created: new Date(),
         content: data.content,
         status: data.status,
-        images: listfile
+        images: listfile,
+        feeling: {
+            code: data.feeling_code,
+            name: data.feeling_name
+        }
     })
 
     let createdPost = await Post.findById({ _id: post._id }).populate([
@@ -31,7 +36,7 @@ exports.createPost = async (id, data, files = undefined) => {
 };
 
 exports.editPost = async (id, data, files = undefined) => {
-    console.log('ddddddd',data);
+    console.log('ddddddd', data);
     let post = await Post.findById({ _id: id })
     post.content = data.content
     post.modified = new Date()
@@ -48,7 +53,7 @@ exports.editPost = async (id, data, files = undefined) => {
         post.image = files
     }
     await post.save()
-    
+
     let editPost = await Post.findById(id).populate([
         { path: "creator", populate: "users", select: "firstName surName avatar" },
         { path: "comment.creator", populate: 'users', select: "firstName surName avatar" }

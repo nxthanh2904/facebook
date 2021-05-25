@@ -8,7 +8,8 @@ const auth = require('./modules/auth/auth.route')
 const post = require('./modules/post/post.route')
 const search = require('./modules/search/search.route')
 const chat = require('./modules/chat/chat.route')
-const {serverSocket} = require('./serverSocket');
+const friend = require('./modules/friends/friends.route')
+const { serverSocket } = require('./serverSocket');
 require('dotenv').config();
 const app = express();
 const server = http.createServer(app);
@@ -26,20 +27,21 @@ app.use("/upload/comments", express.static("upload/comments"));
 const db = process.env.DATABASE;// DB Config
 console.log('database', db);
 mongoose // Connect to MongoDB
-    .connect(
-        db, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
-    }
-    )
-    .then(() => console.log("MongoDB successfully connected"))
-    .catch(err => console.log(err));
+  .connect(
+    db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  }
+  )
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch(err => console.log(err));
 global.isLog = false;
 
 
 app.use(cors());
 app.use('/auth', auth);
+app.use('/friend', friend);
 app.use('/post', post);
 app.use('/search', search);
 app.use('/chat', chat);

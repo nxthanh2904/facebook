@@ -30,6 +30,7 @@ exports.createPost = async (req, res) => {
             content: post
         });
     } catch (error) {
+        console.log('err', error);
         res.status(400).json({
             success: false,
             messages: ['add_post_faile'],
@@ -39,22 +40,22 @@ exports.createPost = async (req, res) => {
 };
 
 exports.editPost = async (req, res) => {
-  //  try {
-        // let files = [];
-        // if (req.files !== undefined) {
-        //     req.files.forEach((elem) => {
-        //         let path = elem.destination + '/' + elem.filename;
-        //         files.push(path)
+    //  try {
+    // let files = [];
+    // if (req.files !== undefined) {
+    //     req.files.forEach((elem) => {
+    //         let path = elem.destination + '/' + elem.filename;
+    //         files.push(path)
 
-        //     })
-        // }
-        const post = await postService.editPost( req.params.id, req.body);
+    //     })
+    // }
+    const post = await postService.editPost(req.params.id, req.body);
 
-        res.status(200).json({
-            success: true,
-            messages: ['edit_post_success'],
-            content: post
-        });
+    res.status(200).json({
+        success: true,
+        messages: ['edit_post_success'],
+        content: post
+    });
     // } catch (error) {
     //     res.status(400).json({
     //         success: false,
@@ -139,8 +140,9 @@ exports.setComment = async (req, res) => {
     try {
 
         let files = [];
+        console.log("fieleeeeee", req.files);
         if (req.files !== undefined) {
-           
+
             req.files.forEach((elem) => {
 
                 let path = elem.destination + '/' + elem.filename;
@@ -239,7 +241,3 @@ exports.reportPost = async (req, res) => {
         });
     }
 };
-
-
-
-

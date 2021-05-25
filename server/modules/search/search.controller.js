@@ -1,5 +1,29 @@
 const searchService = require('./search.services');
 
+exports.searchUser = async (req, res) => {
+    try {
+        let data = {
+            keyword: req.query.keyword,
+            page: req.query.page,
+            limit: req.query.limit,
+            type: req.query.type,
+        }
+        const users = await searchService.searchUser(data);
+
+        res.status(200).json({
+            success: true,
+            messages: ['search_user_success'],
+            content: users
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            messages: ['search_user_faile'],
+            content: error
+        });
+    }
+};
+
 exports.searchPost = async (req, res) => {
     try {
         const post = await searchService.searchPost(req.body.keyword);
@@ -74,4 +98,3 @@ exports.deleteAllSearch = async (req, res) => {
         });
     }
 };
-

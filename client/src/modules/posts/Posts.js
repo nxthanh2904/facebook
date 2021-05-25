@@ -56,10 +56,11 @@ const Posts = (props) => {
             setPostEdit={setPostEdit}
             postEdit={postEdit}
           />
-        )) : <div className="box" style={{ marginTop: "10px", height: "50vh", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <img style={{ height: "30vh" }} src="/nodata.png" />
-          <h1 >Opp! Chưa có bài viết nào</h1>
-        </div>
+        )) : <div></div>
+          // <div className="box" style={{ marginTop: "10px", height: "50vh", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          //   <img style={{ height: "30vh" }} src="/nodata.png" />
+          //   <h1 >Opp! Chưa có bài viết nào</h1>
+          // </div>
         }
       </FlipMove>
     </div>

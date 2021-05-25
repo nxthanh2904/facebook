@@ -41,7 +41,7 @@ const listFeeling = [
     {
         id: 8,
         code: ':-O',
-        name: "Ồ ngạc nhiên vl"
+        name: "Ngạc nhiên"
     },
     {
         id: 9,
@@ -51,7 +51,7 @@ const listFeeling = [
     {
         id: 10,
         code: ':poop:',
-        name: "như shit"
+        name: "Chán nản"
     },
 ]
 
@@ -66,24 +66,24 @@ const Feeling = (props) => {
         <DialogModal
             modalID="modal-create-post-feeling"
             formID="form-create-post-feeling"
-            title= "Feeling"
+            title="Feeling"
             hasNote={false}
-
+            hasSaveButton={false}
         >
-            <div style= {{display: "flex", flexWrap:"wrap",}}>
-                 {
+            <div style={{ display: "flex", flexWrap: "wrap", }}>
+                {
                     listFeeling.map(emoji => (
-                        <div className={'col-md-6'} onClick={()=>onChangeFeeling(emoji)}  style= {{display: "flex"}}  id = {emoji.id}>
+                        <div className={'col-md-6'} onClick={() => onChangeFeeling(emoji)} style={{ display: "flex", padding: "5px", cursor: 'pointer' }} id={emoji.id}>
                             <div>{ReactEmoji.emojify(emoji.code)}</div>
-                            <div style= {{ marginLeft:"10px"}}>{emoji.name}</div>
+                            <div style={{ marginLeft: "10px" }}>{emoji.name}</div>
                         </div>
                     ))
-            }
-           </div>
+                }
+            </div>
 
         </DialogModal>
-        )
-    
+    )
+
 }
 
 export default Feeling;
