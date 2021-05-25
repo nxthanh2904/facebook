@@ -2,12 +2,12 @@ const ChatServices = require('./modules/chat/chat.service');
 
 const serverSocket = (io) => {
     io.on('connection', (socket) => {
-
+        console.log('connected',socket.id)
         // join room
         socket.on('join', (data, callback) => {
             socket.join(data.roomId);
             io.to(data.roomId).emit('roomData', 'joineddd');
-            // console.log('rommmmmm',io.sockets.adapter.rooms)
+             console.log('rommmmmm',io.sockets.adapter.rooms)
             callback();
         });
 

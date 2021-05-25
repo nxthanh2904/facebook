@@ -5,17 +5,17 @@ export * from './src/loading/loading';
 export * from './src/paginate-bar/paginateBar';
 export * from './src/search-bar/searchBar';
 export * from './src/date-picker/datePicker';
-export * from './src/tree-table/treeTable';
+//export * from './src/tree-table/treeTable';
 export * from './src/select-multi/selectMulti';
 export * from './src/slim-scroll/slimScroll';
 export * from './src/error-label/errorLabel';
 export * from './src/select-box/selectBox';
 export * from './src/date-time-converter';
 export * from './src/tooltip';
-export * from './src/tree/tree';
-export * from './src/tree-select';
-export * from './src/time-picker/timePicker'
+// export * from './src/tree/tree';
+// export * from './src/tree-select';
+//export * from './src/time-picker/timePicker'
 export * from './src/api-image';
 export * from './src/upload-file/uploadFile';
-export * from './src/scheduler/scheduler';
+// export * from './src/scheduler/scheduler';
 export * from './src/pinned-panel/pinnedPanel';
