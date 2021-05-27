@@ -6,7 +6,6 @@ const Chat = require('../../models/chat')
  * @param {*} id user
  */
 exports.getAllConversations = async (id) => {
-    console.log('id', id);
     let contv = await Chat.find({})
 
     let conversations = await Chat.find({ listuser: id })
@@ -14,9 +13,6 @@ exports.getAllConversations = async (id) => {
             { path: "listuser", select: "id active firstName surName avatar birthday" },
             { path: "message.creator", select: "id active firstName surName avatar birthday" }
         ]).lean(); // chuyển giá trị trả về thành 1 plain object js
-
-
-    // console.log('convert', contv);
 
     for (let i in conversations) {
         const tmp = conversations[i].listuser;

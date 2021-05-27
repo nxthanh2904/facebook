@@ -30,6 +30,8 @@ const Chat = (props) => {
 
 
   useEffect(() => {
+    
+    console.log('connecttt');
     socket = io.connect(process.env.REACT_APP_SERVER);
     setRoom("abc");
     setName(user.firstName);
